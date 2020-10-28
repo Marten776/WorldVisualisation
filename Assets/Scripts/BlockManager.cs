@@ -29,7 +29,7 @@ public class BlockManager : MonoBehaviour
 
         if(created.Count>0)
         {
-            Highlighting(); //FIX IT
+            Highlighting();
         }
         foreach(var m in marked)
         {
@@ -58,13 +58,14 @@ public class BlockManager : MonoBehaviour
 
             if (_selection != null)
             {
-
+            if (_selection.CompareTag(SelectableTag))
+            {
                 var selectionRenderer = _selection.GetComponentsInChildren<Renderer>();
                 foreach (var c in selectionRenderer)
                 {
                     c.material = defaultMaterial;
                 }
-
+            }
                 _selection = null;
 
             }
@@ -160,6 +161,8 @@ public class BlockManager : MonoBehaviour
                 GroundScal(c);
             }
         }
+
+        
     }
 
 
@@ -176,6 +179,7 @@ public class BlockManager : MonoBehaviour
             if (tempY.y <= 0)
             {
                 Debug.Log("No possible, object destroyed!");
+
                 created.Remove(obj);
                 marked.Remove(obj);
                 Destroy(obj);
