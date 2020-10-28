@@ -18,10 +18,16 @@ public class SingleGround : MonoBehaviour
     }
     void OnMouseDown()
     {
-
+        if(worldMat != null)
+        {
+            Debug.Log("cant do that");
+            return;
+        }
 
        GameObject worldMata = BuildManager.instance.GetWorldMatToBuild();
-       worldMat = (GameObject)Instantiate(worldMata, transform.position , transform.rotation);
+
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        worldMat = (GameObject)Instantiate(worldMata, pos , transform.rotation);
 
     }
    

@@ -33,6 +33,7 @@ public class BlockManager : MonoBehaviour
         }
         foreach(var m in marked)
         {
+            // podswietlanie zaznaczonych na czerwono
             var renderer = m.GetComponentsInChildren<Renderer>();
             foreach(var s in renderer)
                 s.material = highlightedMaterial;
@@ -159,8 +160,6 @@ public class BlockManager : MonoBehaviour
                 GroundScal(c);
             }
         }
-
-        
     }
 
 
@@ -178,6 +177,7 @@ public class BlockManager : MonoBehaviour
             {
                 Debug.Log("No possible, object destroyed!");
                 created.Remove(obj);
+                marked.Remove(obj);
                 Destroy(obj);
                 return;
             }
