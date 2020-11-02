@@ -11,20 +11,40 @@ public class BlockManager : MonoBehaviour
     [SerializeField] private Material defaultMaterial;
     private Transform _selection;
 
+    public RectTransform selectionBox;
+    private Vector2 startPos;
+
+
     Vector3 tempY;
+
+    Camera cam;
 
 
     public List<GameObject> created = new List<GameObject>();
     public List<GameObject> marked = new List<GameObject>();
 
 
-    
+    private void Start()
+    {
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+    }
     void Update()
     {
         
         if (Input.GetMouseButtonDown(0))
         {
             Raycast();
+            startPos = Input.mousePosition;
+        }
+
+        if(Input.GetMouseButtonUp(0))
+        {
+            
+            ReleaseSelectionBox();
+        }
+        if(Input.GetMouseButton(0))
+        {
+            UpdateSelectionBox(Input.mousePosition);
         }
 
         if(created.Count>0)
@@ -52,6 +72,51 @@ public class BlockManager : MonoBehaviour
             Debug.Log("Marked Cleared!");
         }
         OperationsOnCreatedObjects();
+
+
+    }
+
+    void UpdateSelectionBox(Vector2 curMousePos)
+    {
+        if (!selectionBox.gameObject.activeInHierarchy)
+            selectionBox.gameObject.SetActive(true);
+
+        float width = curMousePos.x - startPos.x;
+        float height = curMousePos.y - startPos.y;
+
+        selectionBox.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+        selectionBox.anchoredPosition = startPos + new Vector2(width / 2, height / 2);
+    }
+
+    void ReleaseSelectionBox()
+    {
+        selectionBox.gameObject.SetActive(false);
+
+        bool m = false;
+        Vector2 min = selectionBox.anchoredPosition - (selectionBox.sizeDelta / 2);
+        Vector2 max = selectionBox.anchoredPosition + (selectionBox.sizeDelta / 2);
+        if (created.Count > 0)
+        {
+            foreach (var v in created)
+            {
+                
+                Vector3 screenPos = cam.WorldToScreenPoint(v.transform.position);
+
+                if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
+                {
+                    marked.Add(v);
+                    m = true;
+                }
+                
+            }
+            
+        }
+        if(m==true)
+        {
+            Debug.Log("Group of fields Marked! Number of fields marked: " + marked.Count);
+            m = false;
+        }
+
     }
     void Highlighting()
     {
