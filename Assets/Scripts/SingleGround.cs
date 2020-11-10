@@ -6,8 +6,9 @@ public class SingleGround : MonoBehaviour
 {
     public Color hoverColor;
 
-    private GameObject worldMat;
-    
+    GameObject worldMat;
+
+    private Vector2 startPos;
 
     private Renderer rend;
     private Color startColor;
@@ -16,6 +17,7 @@ public class SingleGround : MonoBehaviour
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
     }
+
     void OnMouseDown()
     {
         if(worldMat != null)

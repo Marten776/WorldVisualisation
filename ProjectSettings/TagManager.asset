@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Hell
+  - Selectable
+  - Water
   layers:
   - Default
   - TransparentFX

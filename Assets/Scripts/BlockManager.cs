@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
 
     [SerializeField] private string SelectableTag = "Selectable";
+    [SerializeField] private string WaterTag = "Water";
     [SerializeField] private Material highlightedMaterial;
     [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material WaterMaterial;
     private Transform _selection;
 
     public RectTransform selectionBox;
-    private Vector2 startPos;
+
+    public Highlight highlight = new Highlight();
+
+    //public RectTransform selectionBox;
+     public Vector2 startPos;
 
 
     Vector3 tempY;
@@ -39,17 +46,15 @@ public class BlockManager : MonoBehaviour
 
         if(Input.GetMouseButtonUp(0))
         {
-            
-            ReleaseSelectionBox();
+           ReleaseSelectionBox();
         }
         if(Input.GetMouseButton(0))
         {
             UpdateSelectionBox(Input.mousePosition);
         }
-
-        if(created.Count>0)
+        if (created.Count>0)
         {
-            Highlighting();
+            highlight.Highlighting();
         }
         foreach(var m in marked)
         {
@@ -63,6 +68,7 @@ public class BlockManager : MonoBehaviour
         {
             foreach (var m in marked)
             {
+                m.gameObject.tag = SelectableTag;
                 var renderer = m.GetComponentsInChildren<Renderer>();
                 foreach (var s in renderer)
                     s.material = defaultMaterial;
@@ -71,11 +77,30 @@ public class BlockManager : MonoBehaviour
 
             Debug.Log("Marked Cleared!");
         }
+
+        if(Input.GetKeyDown("b"))
+        {
+            foreach(var pp in marked)
+            {
+                pp.gameObject.tag = WaterTag;
+                var renderer = pp.GetComponentsInChildren<Renderer>();
+
+                foreach (var sp in renderer)
+                {
+                    sp.material = WaterMaterial;
+                }
+                    
+                
+            }
+            marked.Clear();
+
+            Debug.Log("Water Created!");
+        }
+
         OperationsOnCreatedObjects();
 
-
     }
-
+    
     void UpdateSelectionBox(Vector2 curMousePos)
     {
         if (!selectionBox.gameObject.activeInHierarchy)
@@ -99,7 +124,7 @@ public class BlockManager : MonoBehaviour
         {
             foreach (var v in created)
             {
-                
+
                 Vector3 screenPos = cam.WorldToScreenPoint(v.transform.position);
 
                 if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
@@ -107,55 +132,18 @@ public class BlockManager : MonoBehaviour
                     marked.Add(v);
                     m = true;
                 }
-                
+
             }
-            
+
         }
-        if(m==true)
+        if (m == true)
         {
             Debug.Log("Group of fields Marked! Number of fields marked: " + marked.Count);
             m = false;
         }
 
     }
-    void Highlighting()
-    {
-
-            if (_selection != null)
-            {
-            if (_selection.CompareTag(SelectableTag))
-            {
-                var selectionRenderer = _selection.GetComponentsInChildren<Renderer>();
-                foreach (var c in selectionRenderer)
-                {
-                    c.material = defaultMaterial;
-                }
-            }
-                _selection = null;
-
-            }
-        
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit hit = new RaycastHit();
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                var selection = hit.transform;
-                if (selection.CompareTag(SelectableTag))
-                {
-                    var SelectionRenderer = selection.GetComponentsInChildren<Renderer>();
-                    if (SelectionRenderer != null)
-                    {
-                        foreach (var b in SelectionRenderer)
-                        {
-                            b.material = highlightedMaterial;
-                        }
-                    }
-                }
-                _selection = selection;
-        }
-    }
+    
     void Raycast()
     {
         if (_selection != null)
@@ -168,12 +156,13 @@ public class BlockManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             var selection = hit.transform;
-            if (selection.CompareTag(SelectableTag))
+            if (selection.CompareTag(SelectableTag) || selection.CompareTag(WaterTag))
             {
                 sel(selection.gameObject);
             }
 
         }
+
     }
     void sel(GameObject selection)
     {
@@ -203,8 +192,10 @@ public class BlockManager : MonoBehaviour
 
             }
         }
+
         created.Add(selection.gameObject);
     }
+   
     void OperationsOnCreatedObjects()
     {
         if(marked.Count>0)
@@ -229,8 +220,6 @@ public class BlockManager : MonoBehaviour
 
         
     }
-
-
     public void GroundScal(GameObject obj)
     {
         tempY = obj.transform.localScale;
