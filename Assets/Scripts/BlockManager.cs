@@ -29,7 +29,7 @@ public class BlockManager : MonoBehaviour
 
     public List<GameObject> created = new List<GameObject>();
     public List<GameObject> marked = new List<GameObject>();
-
+    public List<GameObject> water = new List<GameObject>();
 
     private void Start()
     {
@@ -43,6 +43,9 @@ public class BlockManager : MonoBehaviour
             Raycast();
             startPos = Input.mousePosition;
         }
+
+        
+
 
         if(Input.GetMouseButtonUp(0))
         {
@@ -74,7 +77,7 @@ public class BlockManager : MonoBehaviour
                     s.material = defaultMaterial;
             }
             marked.Clear();
-
+            water.Clear();
             Debug.Log("Marked Cleared!");
         }
 
@@ -84,13 +87,12 @@ public class BlockManager : MonoBehaviour
             {
                 pp.gameObject.tag = WaterTag;
                 var renderer = pp.GetComponentsInChildren<Renderer>();
+                water.Add(pp);
 
                 foreach (var sp in renderer)
                 {
-                    sp.material = WaterMaterial;
+                    sp.material = WaterMaterial;         
                 }
-                    
-                
             }
             marked.Clear();
 
@@ -101,6 +103,8 @@ public class BlockManager : MonoBehaviour
 
     }
     
+
+
     void UpdateSelectionBox(Vector2 curMousePos)
     {
         if (!selectionBox.gameObject.activeInHierarchy)
@@ -183,7 +187,6 @@ public class BlockManager : MonoBehaviour
                             }
                         }
                     }
-                    
                     marked.Add(selection.gameObject);
                     
                     Debug.Log("Field Marked! Number of fields marked: " + marked.Count);
@@ -198,7 +201,7 @@ public class BlockManager : MonoBehaviour
    
     void OperationsOnCreatedObjects()
     {
-        if(marked.Count>0)
+        if (marked.Count > 0)
         {
             foreach (var m in marked)
             {
@@ -214,10 +217,19 @@ public class BlockManager : MonoBehaviour
             {
                 if (c == null)
                     return;
-                GroundScal(c);
+                if (c.transform.localScale.y == 1)
+                {
+                    water.Add(c);
+                    return;
+                }
+                else if (c.transform.localScale.y > 1)
+                {     
+                    water.Remove(c);
+                    return;
+                }
+                //GroundScal(c);
             }
         }
-
         
     }
     public void GroundScal(GameObject obj)

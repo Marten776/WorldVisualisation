@@ -27811,6 +27811,7 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   created: []
   marked: []
+  water: []
 --- !u!114 &1838846512
 MonoBehaviour:
   m_ObjectHideFlags: 0
