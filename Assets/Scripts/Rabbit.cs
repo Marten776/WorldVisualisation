@@ -9,30 +9,63 @@ public class Rabbit : MonoBehaviour
 
     public string waterTag = "Water";
     public float thirstiness = 15f;
+    private bool isWandering = false;
+    private bool rotatingLeft = false;
+    private bool rotatingRight = false;
+    private bool isWalking = false;
+
+
 
     void Start()
     {
-        InvokeRepeating("waterNeed", 0f, 6f);
+        InvokeRepeating("waterNeed", 6f, 6f);
     }
     void WaterSpoting()
     { 
         GameObject[] water = GameObject.FindGameObjectsWithTag(waterTag);
+        Vector3 closestWaterPosition = new Vector3(0, 0, 0);
+        float closestDistanceToWater = Mathf.Infinity;
         foreach (GameObject w in water)
         {
             Vector3 waterPosition = w.transform.position;
             float distanceToWater = Vector3.Distance(transform.position, w.transform.position);
-
-            float drinking = 1f;
-            if (distanceToWater < range)
+            if(distanceToWater < closestDistanceToWater)
             {
-                transform.position = Vector3.MoveTowards(transform.position, waterPosition, 8f * Time.deltaTime);
-                if (distanceToWater < drinking)
+                closestDistanceToWater = distanceToWater;
+                closestWaterPosition = waterPosition;
+            }
+            float drinking = 1.5f;
+            if (closestDistanceToWater < range)
+            {
+                transform.LookAt(closestWaterPosition);
+                transform.position = Vector3.MoveTowards(transform.position, closestWaterPosition, 2f * Time.deltaTime);
+                if (closestDistanceToWater < drinking)
                 {
                     thirstiness = 100f;
                 }
-
             }
         }   
+    }
+
+    void Walking()
+    {
+        if(isWandering == false)
+        {
+            StartCoroutine(Wander());
+        }
+        if (rotatingLeft == true)
+        {
+            transform.Rotate(transform.up * 50 * Time.deltaTime);
+        }
+        if (rotatingRight == true)
+        {
+            transform.Rotate(transform.up * -50 * Time.deltaTime);
+        }
+        if(isWalking == true)
+        {
+            transform.position += transform.forward * 2f * Time.deltaTime;
+        }
+
     }
     void waterNeed()
     {
@@ -42,7 +75,9 @@ public class Rabbit : MonoBehaviour
     void Update()
     {
 
-        if(thirstiness < 50f)
+        Walking();
+
+        if (thirstiness < 50f)
         {
             if (GameObject.FindGameObjectWithTag(waterTag) != null)
                 WaterSpoting();
@@ -59,5 +94,33 @@ public class Rabbit : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+    IEnumerator Wander()
+    {
+        int rotTime = Random.Range(1, 3);
+        int rotateWait = Random.Range(1,3);
+        int rotLorR = Random.Range(0, 3);
+        int walkWait = Random.Range(1,3);
+        int walkTime = Random.Range(1, 5);
+
+        isWandering = true;
+        yield return new WaitForSeconds(walkWait);
+        isWalking = true;
+        yield return new WaitForSeconds(walkTime);
+        isWalking = false;
+        yield return new WaitForSeconds(rotateWait);
+        if(rotLorR == 1)
+        {
+            rotatingRight = true;
+            yield return new WaitForSeconds(rotTime);
+            rotatingRight = false;
+        }
+        if (rotLorR == 2)
+        {
+            rotatingLeft = true;
+            yield return new WaitForSeconds(rotTime);
+            rotatingLeft = false;
+        }
+        isWandering = false;
     }
 }

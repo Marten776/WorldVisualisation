@@ -32970,7 +32970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5232891529479420791}
-  range: 7.18
+  range: 5
   waterTag: Water
   thirstiness: 55
 --- !u!136 &5232891529479420795
