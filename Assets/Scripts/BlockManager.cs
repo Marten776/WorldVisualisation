@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BlockManager : MonoBehaviour
 {
+
+    BuildManager buildManager;
 
     [SerializeField] private string SelectableTag = "Selectable";
     [SerializeField] private string WaterTag = "Water";
@@ -40,8 +43,15 @@ public class BlockManager : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0))
         {
+            //if(IsAnimal()==1)
+            //{
+            //    GameObject rabbit = BuildManager.instance.GetWorldMatToBuild();
+            //    Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            //    rabbit = (GameObject)Instantiate(rabbit, pos, transform.rotation);
+           // }
             Raycast();
             startPos = Input.mousePosition;
+
         }
 
         
@@ -88,7 +98,6 @@ public class BlockManager : MonoBehaviour
                 pp.gameObject.tag = WaterTag;
                 var renderer = pp.GetComponentsInChildren<Renderer>();
                 water.Add(pp);
-
                 foreach (var sp in renderer)
                 {
                     sp.material = WaterMaterial;         
@@ -103,7 +112,13 @@ public class BlockManager : MonoBehaviour
 
     }
     
-
+    public int IsAnimal()
+    {
+        if (EventSystem.current.currentSelectedGameObject.name == "RabbitButton")
+            return 1;
+        else
+            return 0;
+    }    
 
     void UpdateSelectionBox(Vector2 curMousePos)
     {

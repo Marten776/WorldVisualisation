@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
         if (!doMovement)
             return;
 
-        if(Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness  )
+        if(Input.GetKey("w") /*|| Input.mousePosition.y >= Screen.height - panBorderThickness */ )
         {
             transform.Translate(Vector3.forward * panSpeed * Time.deltaTime);
         }
@@ -31,15 +31,15 @@ public class CameraController : MonoBehaviour
         {
             transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0, Space.World);
         }
-        if (Input.GetKey("s") || Input.mousePosition.y <= - panBorderThickness)
+        if (Input.GetKey("s") /*|| Input.mousePosition.y <= - panBorderThickness*/)
         {
             transform.Translate(Vector3.back * panSpeed * Time.deltaTime);
         }        
-        if(Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness)
+        if(Input.GetKey("d")/* || Input.mousePosition.x >= Screen.width - panBorderThickness*/)
         {
             transform.Translate(Vector3.right * panSpeed * Time.deltaTime);
         }        
-        if(Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness)
+        if(Input.GetKey("a")/* || Input.mousePosition.x <= panBorderThickness*/)
         {
             transform.Translate(Vector3.left * panSpeed * Time.deltaTime);
         }

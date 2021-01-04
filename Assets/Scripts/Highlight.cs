@@ -12,7 +12,6 @@ public class Highlight : MonoBehaviour
     private Transform _selection;
     public void Highlighting()
     {
-
         if (_selection != null)
         {
             if (_selection.CompareTag(SelectableTag))

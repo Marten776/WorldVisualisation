@@ -55,11 +55,11 @@ public class Rabbit : MonoBehaviour
         }
         if (rotatingLeft == true)
         {
-            transform.Rotate(transform.up * 50 * Time.deltaTime);
+            transform.Rotate(transform.up * 100 * Time.deltaTime);
         }
         if (rotatingRight == true)
         {
-            transform.Rotate(transform.up * -50 * Time.deltaTime);
+            transform.Rotate(transform.up * -100 * Time.deltaTime);
         }
         if(isWalking == true)
         {
@@ -70,7 +70,7 @@ public class Rabbit : MonoBehaviour
     void waterNeed()
     {
         thirstiness -= 5f;
-        Debug.Log("This rabbit thirstiness: " + thirstiness);
+        //Debug.Log("This rabbit thirstiness: " + thirstiness);
     }
     void Update()
     {
