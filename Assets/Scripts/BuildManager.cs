@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager instance;
-    //bool isAnimal = false;
+    bool isCalled=false;
     void Awake()
     {
         if(instance != null)
@@ -23,17 +23,29 @@ public class BuildManager : MonoBehaviour
     {
         worldMata = worldMatPrefab;
     }
-
-
+    void Update()
+    {
+        if(isCalled==true)
+        {
+            animals = null; 
+        }
+        isCalled = false;
+    }
+    private GameObject animals;
     private GameObject worldMata;
-    //public void SetAnimal(GameObject animal)
-   // {
-   //     worldMata = animal;
-   // }
+    public void SetAnimal(GameObject animal)
+    {
+        animals = animal;
+    }
 
     public GameObject GetWorldMatToBuild()
     {
         return worldMata;
+    }
+    public GameObject GetAnimalToBuild()
+    {
+        isCalled = true;
+        return animals;
     }
 
 

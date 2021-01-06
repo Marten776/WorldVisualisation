@@ -33456,6 +33456,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 1838846508}
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204881059390237315, guid: 275f2fdb9c4fd944488fc104faee90c9,
+        type: 3}
+      propertyPath: m_Colors.m_ColorMultiplier
+      value: 3.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204881059390237315, guid: 275f2fdb9c4fd944488fc104faee90c9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: onAnimalSelected
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204881059390237315, guid: 275f2fdb9c4fd944488fc104faee90c9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 275f2fdb9c4fd944488fc104faee90c9, type: 3}

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Highlight : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Highlight : MonoBehaviour
     private Transform _selection;
     public void Highlighting()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
         if (_selection != null)
         {
             if (_selection.CompareTag(SelectableTag))

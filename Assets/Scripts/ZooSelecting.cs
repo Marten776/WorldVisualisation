@@ -14,6 +14,6 @@ public class ZooSelecting : MonoBehaviour
     public void RabbitChoice()
     {
         Debug.Log("Rabbit selected");
-       // buildManager.SetAnimal(buildManager.rabbitPrefab);
+       buildManager.SetAnimal(buildManager.rabbitPrefab);
     }
 }

@@ -4,7 +4,6 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
 public class BlockManager : MonoBehaviour
 {
 
@@ -43,7 +42,7 @@ public class BlockManager : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0))
         {
-            //if(IsAnimal()==1)
+            //if(IsAnimal()==true)
             //{
             //    GameObject rabbit = BuildManager.instance.GetWorldMatToBuild();
             //    Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
@@ -54,7 +53,6 @@ public class BlockManager : MonoBehaviour
 
         }
 
-        
 
 
         if(Input.GetMouseButtonUp(0))
@@ -112,13 +110,13 @@ public class BlockManager : MonoBehaviour
 
     }
     
-    public int IsAnimal()
-    {
-        if (EventSystem.current.currentSelectedGameObject.name == "RabbitButton")
-            return 1;
-        else
-            return 0;
-    }    
+  //  public bool IsAnimal()
+   // {
+   //     if (EventSystem.current.currentSelectedGameObject.name == "RabbitButton")
+    //        return true;
+    //    else
+    //        return false;
+   // }    
 
     void UpdateSelectionBox(Vector2 curMousePos)
     {
@@ -185,7 +183,8 @@ public class BlockManager : MonoBehaviour
     }
     void sel(GameObject selection)
     {
-
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
         if (created != null)
         {
             foreach (var c in created)
@@ -232,16 +231,16 @@ public class BlockManager : MonoBehaviour
             {
                 if (c == null)
                     return;
-                if (c.transform.localScale.y == 1)
-                {
-                    water.Add(c);
-                    return;
-                }
-                else if (c.transform.localScale.y > 1)
-                {     
-                    water.Remove(c);
-                    return;
-                }
+               // if (c.transform.localScale.y == 1)
+               // {
+               //     water.Add(c);
+                //    return;
+               // }
+                //else if (c.transform.localScale.y > 1)
+                //{     
+                //    water.Remove(c);
+                //    return;
+                //}
                 //GroundScal(c);
             }
         }
