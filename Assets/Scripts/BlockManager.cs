@@ -79,10 +79,15 @@ public class BlockManager : MonoBehaviour
         {
             foreach (var m in marked)
             {
+                if(m.gameObject.tag=="Water")
+                {
+                    m.transform.localScale = new Vector3(m.transform.localScale.x, m.transform.localScale.y + 0.2f, m.transform.localScale.z);
+                }
                 m.gameObject.tag = SelectableTag;
                 var renderer = m.GetComponentsInChildren<Renderer>();
                 foreach (var s in renderer)
                     s.material = defaultMaterial;
+                    
             }
             marked.Clear();
             water.Clear();
@@ -98,8 +103,9 @@ public class BlockManager : MonoBehaviour
                 water.Add(pp);
                 foreach (var sp in renderer)
                 {
-                    sp.material = WaterMaterial;         
-                }
+                    sp.material = WaterMaterial;
+                    pp.transform.localScale = new Vector3(pp.transform.localScale.x, pp.transform.localScale.y-0.2f, pp.transform.localScale.z);
+                 }
             }
             marked.Clear();
 

@@ -8,7 +8,7 @@ public class WorldMaterial : MonoBehaviour
 {
     GameObject rab;
     GameObject animal;
-    bool isAnimal = false;
+    //bool isAnimal = false;
     private void Update()
     {
         // onAnimalSelected();

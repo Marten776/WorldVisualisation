@@ -14978,8 +14978,8 @@ MonoBehaviour:
   panSpeed: 10
   rotateSpeed: 20
   panBorderThickness: 10
-  scrollSpeed: 5
-  minY: 10
+  scrollSpeed: 2
+  minY: 2
   maxY: 1000
 --- !u!1001 &966868293
 PrefabInstance:

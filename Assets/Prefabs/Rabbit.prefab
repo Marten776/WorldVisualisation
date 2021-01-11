@@ -962,7 +962,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1.5
+  m_Height: 1.2
   m_Direction: 2
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!23 &5482011997265315414
@@ -1015,9 +1015,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5482011997265315420}
-  range: 5
+  range: 4
+  avoidWaterRange: 1
   waterTag: Water
-  thirstiness: 55
+  thirstiness: 100
 --- !u!1 &5482011997265315423
 GameObject:
   m_ObjectHideFlags: 0
