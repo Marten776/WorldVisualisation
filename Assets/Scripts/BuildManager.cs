@@ -18,7 +18,7 @@ public class BuildManager : MonoBehaviour
 
     public GameObject worldMatPrefab;
     public GameObject rabbitPrefab;
-
+    GameObject worldMata;
     void Start()
     {
         worldMata = worldMatPrefab;
@@ -32,7 +32,7 @@ public class BuildManager : MonoBehaviour
         isCalled = false;
     }
     private GameObject animals;
-    private GameObject worldMata;
+
     public void SetAnimal(GameObject animal)
     {
         animals = animal;

@@ -53,9 +53,7 @@ public class BlockManager : MonoBehaviour
 
         }
 
-
-
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
            ReleaseSelectionBox();
         }
@@ -115,7 +113,13 @@ public class BlockManager : MonoBehaviour
         OperationsOnCreatedObjects();
 
     }
+
+    public void AddToCreated(GameObject x)
+    {
+        created.Add(x);
+    }
     
+
   //  public bool IsAnimal()
    // {
    //     if (EventSystem.current.currentSelectedGameObject.name == "RabbitButton")
@@ -219,6 +223,10 @@ public class BlockManager : MonoBehaviour
         created.Add(selection.gameObject);
     }
    
+    public void HelloItsMe()
+    {
+        Debug.Log("Hello my name is Block Manager ;) ");
+    }
     void OperationsOnCreatedObjects()
     {
         if (marked.Count > 0)

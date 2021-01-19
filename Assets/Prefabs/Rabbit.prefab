@@ -892,6 +892,7 @@ GameObject:
   - component: {fileID: 5482011997265315408}
   - component: {fileID: 5482011997265315414}
   - component: {fileID: 5482011997265315410}
+  - component: {fileID: 1121671423481532045}
   m_Layer: 0
   m_Name: Rabbit
   m_TagString: Untagged
@@ -1009,7 +1010,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5482011997265315421}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37383804667eb0f4b82c4ade51d3fdb9, type: 3}
   m_Name: 
@@ -1018,7 +1019,20 @@ MonoBehaviour:
   range: 4
   avoidWaterRange: 1
   waterTag: Water
-  thirstiness: 100
+  thirstiness: 55
+--- !u!114 &1121671423481532045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482011997265315421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720fb654926e9c34dbac8131994ee720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thirstiness: 70
 --- !u!1 &5482011997265315423
 GameObject:
   m_ObjectHideFlags: 0
