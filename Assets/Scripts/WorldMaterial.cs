@@ -8,11 +8,13 @@ public class WorldMaterial : MonoBehaviour
 {
     GameObject rab;
     GameObject animal;
+    public Vector3 pos;
     //bool isAnimal = false;
     private void Update()
     {
         // onAnimalSelected();
         //animal = null;
+        
     }
     void OnMouseDown()
     {
@@ -22,7 +24,8 @@ public class WorldMaterial : MonoBehaviour
         if (animal != null)
         {
             GameObject rabbit = animal;
-            Vector3 pos = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+            float scale = transform.localScale.y;
+            pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
             rab = (GameObject)Instantiate(rabbit, pos, transform.rotation);
         }
         

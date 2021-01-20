@@ -42,15 +42,19 @@ public class BlockManager : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0))
         {
-            //if(IsAnimal()==true)
-            //{
-            //    GameObject rabbit = BuildManager.instance.GetWorldMatToBuild();
-            //    Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-            //    rabbit = (GameObject)Instantiate(rabbit, pos, transform.rotation);
-           // }
             Raycast();
             startPos = Input.mousePosition;
+        }
 
+
+        GameObject[] cre = GameObject.FindGameObjectsWithTag(SelectableTag);
+
+        if (cre.Length >= created.Count)
+        {
+            foreach (GameObject worldItem in cre)
+            {
+                created.Add(worldItem);
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -113,21 +117,6 @@ public class BlockManager : MonoBehaviour
         OperationsOnCreatedObjects();
 
     }
-
-    public void AddToCreated(GameObject x)
-    {
-        created.Add(x);
-    }
-    
-
-  //  public bool IsAnimal()
-   // {
-   //     if (EventSystem.current.currentSelectedGameObject.name == "RabbitButton")
-    //        return true;
-    //    else
-    //        return false;
-   // }    
-
     void UpdateSelectionBox(Vector2 curMousePos)
     {
         if (!selectionBox.gameObject.activeInHierarchy)
@@ -153,15 +142,12 @@ public class BlockManager : MonoBehaviour
             {
 
                 Vector3 screenPos = cam.WorldToScreenPoint(v.transform.position);
-
                 if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
                 {
                     marked.Add(v);
                     m = true;
                 }
-
             }
-
         }
         if (m == true)
         {
@@ -189,7 +175,6 @@ public class BlockManager : MonoBehaviour
             }
 
         }
-
     }
     void sel(GameObject selection)
     {

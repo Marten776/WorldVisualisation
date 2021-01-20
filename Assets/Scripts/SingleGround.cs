@@ -10,9 +10,9 @@ public class SingleGround : MonoBehaviour
     public BlockManager bl;
 
     GameObject worldMat;
-    public GameObject CreatedWorldMta;
+    //public GameObject CreatedWorldMta;
     private Vector2 startPos;
-
+    bool onlyOnce = true;
     private Renderer rend;
     private Color startColor;
     void Start()
@@ -20,27 +20,44 @@ public class SingleGround : MonoBehaviour
         bl = GameObject.FindObjectOfType<BlockManager>();
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
-        if (EventSystem.current.IsPointerOverGameObject())
-            return;
-        GameObject worldMata = BuildManager.instance.GetWorldMatToBuild();
-        if(worldMata!=null)
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("space"))
         {
-            //Debug.Log(worldMata.name);
-            bl.AddToCreated(worldMata);
-            Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-            worldMat = (GameObject)Instantiate(worldMata, pos, transform.rotation);
+            if (onlyOnce==true)
+            {
+                CreatingGround();
+                onlyOnce = false;
+            }
+            else
+            {
+                Debug.Log("Ohh boi, you have already created your ground and you can't do that again");
+            }
         }
     }
 
 
+    void CreatingGround()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+        GameObject worldMata = BuildManager.instance.GetWorldMatToBuild();
+        if (worldMata != null)
+        {
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            worldMat = (GameObject)Instantiate(worldMata, pos, transform.rotation);
+        }
+    }
     void OnMouseDown()
     {
         if (worldMat == null)
         {
             GameObject worldMata = BuildManager.instance.GetWorldMatToBuild();
-            Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+           Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             worldMat = (GameObject)Instantiate(worldMata, pos, transform.rotation);
-        }
+       }
     }
    
     void OnMouseEnter()
