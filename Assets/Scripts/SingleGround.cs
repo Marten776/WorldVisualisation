@@ -7,17 +7,13 @@ public class SingleGround : MonoBehaviour
 {
     public Color hoverColor;
 
-    public BlockManager bl;
-
+    int counter = 0;
     GameObject worldMat;
-    //public GameObject CreatedWorldMta;
-    private Vector2 startPos;
     bool onlyOnce = true;
     private Renderer rend;
     private Color startColor;
     void Start()
     {
-        bl = GameObject.FindObjectOfType<BlockManager>();
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
     }
@@ -34,6 +30,7 @@ public class SingleGround : MonoBehaviour
             else
             {
                 Debug.Log("Ohh boi, you have already created your ground and you can't do that again");
+                
             }
         }
     }
@@ -41,14 +38,11 @@ public class SingleGround : MonoBehaviour
 
     void CreatingGround()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-            return;
         GameObject worldMata = BuildManager.instance.GetWorldMatToBuild();
-        if (worldMata != null)
-        {
+
             Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-            worldMat = (GameObject)Instantiate(worldMata, pos, transform.rotation);
-        }
+            worldMat = Instantiate(worldMata, pos, transform.rotation);
+
     }
     void OnMouseDown()
     {

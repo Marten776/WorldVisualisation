@@ -28086,7 +28086,6 @@ GameObject:
   - component: {fileID: 1838846509}
   - component: {fileID: 1838846511}
   - component: {fileID: 1838846512}
-  - component: {fileID: 1838846513}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -28136,13 +28135,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59d34b03ad38d543b7239e4ad3a180a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectableTag: Selectable
-  WaterTag: Water
-  highlightedMaterial: {fileID: 2100000, guid: 48a1bf9c124e6ea4d97a59d2febaa815, type: 2}
-  defaultMaterial: {fileID: 2100000, guid: 2dff59ba940bd634c8957829bf2ab5fe, type: 2}
-  WaterMaterial: {fileID: 2100000, guid: 723c326096231df4a84dba27ee5667c6, type: 2}
+  selectableTag: Selectable
+  waterTag: Water
+  highlightedMat: {fileID: 2100000, guid: 48a1bf9c124e6ea4d97a59d2febaa815, type: 2}
+  defaultMat: {fileID: 2100000, guid: 2dff59ba940bd634c8957829bf2ab5fe, type: 2}
+  waterMat: {fileID: 2100000, guid: 723c326096231df4a84dba27ee5667c6, type: 2}
   selectionBox: {fileID: 941892602}
-  highlight: {fileID: 1838846513}
   startPos: {x: 0, y: 0}
   created: []
   marked: []
@@ -28162,23 +28160,6 @@ MonoBehaviour:
   createdText: {fileID: 1103628867}
   markedText: {fileID: 152287699}
   numbers: {fileID: 1838846511}
---- !u!114 &1838846513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838846508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4502c4c3ec1a1f94282ff30dd7dd727e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SelectableTag: Selectable
-  WaterTag: Water
-  highlightedMaterial: {fileID: 2100000, guid: 48a1bf9c124e6ea4d97a59d2febaa815, type: 2}
-  defaultMaterial: {fileID: 2100000, guid: 2dff59ba940bd634c8957829bf2ab5fe, type: 2}
-  WaterMaterial: {fileID: 2100000, guid: 723c326096231df4a84dba27ee5667c6, type: 2}
 --- !u!4 &1842393932 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2933139754099236100, guid: 57d68373c33117d4c8bac029c679b600,

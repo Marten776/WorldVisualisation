@@ -41,7 +41,6 @@ public class Highlight : MonoBehaviour
 
         RaycastHit hit = new RaycastHit();
 
-
         if (Physics.Raycast(ray, out hit))
         {
             var selection = hit.transform;
@@ -59,6 +58,9 @@ public class Highlight : MonoBehaviour
 
             _selection = selection;
         }
+
+
+
     }
 
 }

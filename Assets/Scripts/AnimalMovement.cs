@@ -65,6 +65,7 @@ public class AnimalMovement : MonoBehaviour
             if (currentGoal.tag == "Selectable")
             {
                 //newDir = currentGoal.transform.position;
+
                 float newDirScale = transform.localScale.y;
                 newDir= new Vector3(currentGoal.transform.position.x, currentGoal.transform.position.y + newDirScale, currentGoal.transform.position.z);
                 transform.LookAt(newDir);

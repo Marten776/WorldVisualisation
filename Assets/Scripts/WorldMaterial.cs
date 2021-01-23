@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class WorldMaterial : MonoBehaviour
 {
-    GameObject rab;
+    private GameObject rab;
     GameObject animal;
     public Vector3 pos;
     //bool isAnimal = false;
