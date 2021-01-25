@@ -30,6 +30,14 @@ public class WorldMaterial : MonoBehaviour
         }
         
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Rabbit")
+        {
+            Debug.Log("Some rabbit is on block with this position: " + transform.position);
+        }
+        
+     }
     void OnMouseEnter()
     {
         //rend.material.color = hoverColor;

@@ -7,6 +7,7 @@ TagManager:
   - Hell
   - Selectable
   - Water
+  - Rabbit
   layers:
   - Default
   - TransparentFX

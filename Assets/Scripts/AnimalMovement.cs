@@ -41,7 +41,7 @@ public class AnimalMovement : MonoBehaviour
                 {
                     Debug.Log("Yaaaay! Found some water");
                     //waterDirection = p.transform.position;
-                    float WaterScale = transform.localScale.y;
+                    float WaterScale = p.transform.localScale.y;
                     Vector3 waterDirection = new Vector3(p.transform.position.x, p.transform.position.y + WaterScale, p.transform.position.z);
                     Debug.Log("Water pleace " + waterDirection);
                     transform.LookAt(waterDirection);
@@ -66,15 +66,16 @@ public class AnimalMovement : MonoBehaviour
             {
                 //newDir = currentGoal.transform.position;
 
-                float newDirScale = transform.localScale.y;
+                float newDirScale = currentGoal.transform.localScale.y;
                 newDir= new Vector3(currentGoal.transform.position.x, currentGoal.transform.position.y + newDirScale, currentGoal.transform.position.z);
                 transform.LookAt(newDir);
+                Debug.Log(newDir);
             }
         }
         if (Vector3.Distance(myPos, newDir) > .1f)
         {
             transform.position = Vector3.Lerp(myPos, newDir, lerpTime * Time.deltaTime);
-            Debug.Log(newDir);
+            
         }
     }
     void waterNeed()

@@ -46,10 +46,6 @@ public class BlockManager : MonoBehaviour
             Raycast();
             startPos = Input.mousePosition;
         }
-
-
-        
-
         if (Input.GetMouseButtonUp(0))
         {
            ReleaseSelectionBox();
@@ -112,6 +108,10 @@ public class BlockManager : MonoBehaviour
         OperationsOnCreatedObjects();
 
     }
+
+
+
+
     void GroundCreated()
     {
         GameObject[] cre = GameObject.FindGameObjectsWithTag(selectableTag);
@@ -263,7 +263,7 @@ public class BlockManager : MonoBehaviour
         
         if (Input.GetKeyDown("h"))
         {
-            tempY.y += 1f;
+            tempY.y += 0.2f;
         }
         else if (Input.GetKeyDown("l"))
         {
@@ -276,7 +276,7 @@ public class BlockManager : MonoBehaviour
                 Destroy(obj);
                 return;
             }
-            tempY.y -= 1f;
+            tempY.y -= 0.2f;
         }
         obj.transform.localScale = tempY;
     }

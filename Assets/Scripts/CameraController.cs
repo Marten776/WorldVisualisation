@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
     private bool doMovement = true;
 
     public float panSpeed = 10f;
-    public float rotateSpeed = 40f;
+    public float rotateSpeed = 70f;
     public float panBorderThickness = 10f;
 
     public float scrollSpeed = 5f;
@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.RightShift))
             doMovement = !doMovement;
         if (!doMovement)
             return;
