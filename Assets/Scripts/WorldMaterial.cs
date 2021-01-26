@@ -34,7 +34,7 @@ public class WorldMaterial : MonoBehaviour
     {
         if(collision.gameObject.tag == "Rabbit")
         {
-            Debug.Log("Some rabbit is on block with this position: " + transform.position);
+            //Debug.Log("Some rabbit is on block with this position: " + transform.position);
         }
         
      }

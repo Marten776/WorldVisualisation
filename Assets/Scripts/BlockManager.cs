@@ -263,6 +263,7 @@ public class BlockManager : MonoBehaviour
         
         if (Input.GetKeyDown("h"))
         {
+            
             tempY.y += 0.2f;
         }
         else if (Input.GetKeyDown("l"))
@@ -274,6 +275,11 @@ public class BlockManager : MonoBehaviour
                 created.Remove(obj);
                 marked.Remove(obj);
                 Destroy(obj);
+                return;
+            }
+            if(tempY.y <=.3f)
+            {
+                Debug.Log("No possible, cant go so low");
                 return;
             }
             tempY.y -= 0.2f;

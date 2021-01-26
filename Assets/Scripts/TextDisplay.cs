@@ -13,7 +13,7 @@ public class TextDisplay : MonoBehaviour
 
     void Update()
     {
-        createdText.text = numbers.created.Count.ToString();
-        markedText.text = numbers.marked.Count.ToString();
+        //createdText.text = numbers.created.Count.ToString();
+        //markedText.text = numbers.marked.Count.ToString();
     }
 }
