@@ -3,7 +3,11 @@ guid: 077a6cc75d0c4f5429e4171a17333190
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - worldMatPrefab: {fileID: 8957817675714672928, guid: 1d4d1961996f90840b51413e5bf1695a,
+      type: 3}
+  - rabbitPrefab: {fileID: 192044, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+  - treePrefab: {fileID: 192044, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

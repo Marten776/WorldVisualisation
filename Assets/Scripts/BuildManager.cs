@@ -18,6 +18,17 @@ public class BuildManager : MonoBehaviour
 
     public GameObject worldMatPrefab;
     public GameObject rabbitPrefab;
+
+    public GameObject treePrefab;
+    public GameObject poplarTreePrefab;
+    public GameObject oakTreePrefab;
+
+    public GameObject firstBushPrefab;
+    public GameObject secoundBushPrefab;
+    public GameObject thirdBushPrefab;
+    public GameObject fourthBushPrefab;
+    public GameObject fifthBushPrefab;
+
     GameObject worldMata;
     void Start()
     {
@@ -27,17 +38,29 @@ public class BuildManager : MonoBehaviour
     {
         if(isCalled==true)
         {
-            animals = null; 
+            animals = null;
+            trees = null;
         }
         isCalled = false;
     }
     private GameObject animals;
+    private GameObject trees;
 
     public void SetAnimal(GameObject animal)
     {
         animals = animal;
     }
 
+    public void SetTree(GameObject tree)
+    {
+        trees = tree;
+    }
+
+    public GameObject GetTreeToBuild()
+    {
+        isCalled = true;
+        return trees;
+    }
     public GameObject GetWorldMatToBuild()
     {
         return worldMata;
