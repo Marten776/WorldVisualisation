@@ -8,6 +8,7 @@ TagManager:
   - Selectable
   - Water
   - Rabbit
+  - Bush
   layers:
   - Default
   - TransparentFX

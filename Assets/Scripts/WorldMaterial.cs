@@ -11,14 +11,16 @@ public class WorldMaterial : MonoBehaviour
     GameObject animal;
     GameObject firTree;
     public Vector3 pos;
+    public bool isAnimalOn=false;
+    public bool isPlantOn;
+    public bool isWater;
     //bool isAnimal = false;
     private void Update()
     {
-        // onAnimalSelected();
-        //animal = null;
         
     }
-    void OnMouseDown()
+
+    private void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
@@ -26,7 +28,6 @@ public class WorldMaterial : MonoBehaviour
         firTree = BuildManager.instance.GetTreeToBuild();
         if (animal != null)
         {
-            Debug.Log("Welcome animal is not null");
             GameObject rabbit = animal;
             float scale = transform.localScale.y;
             pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
@@ -34,19 +35,21 @@ public class WorldMaterial : MonoBehaviour
         }
         else if (firTree != null)
         {
-            Debug.Log("Welcome firTree is not null");
             GameObject t = firTree;
             float scale = transform.localScale.y;
+
             pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
             tre = (GameObject)Instantiate(t, pos, transform.rotation);
         }
 
     }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Rabbit")
+        if(collision.gameObject.tag == "Bush")
         {
-            //Debug.Log("Some rabbit is on block with this position: " + transform.position);
+            //Debug.Log("LES GOŁ");
+            //gameObject.tag = "Bush";
         }
         
      }
