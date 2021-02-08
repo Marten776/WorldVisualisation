@@ -1033,6 +1033,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thirstiness: 70
+  hunger: 70
+  actualCube: {fileID: 1470239609014829731, guid: 1d4d1961996f90840b51413e5bf1695a,
+    type: 3}
 --- !u!1 &5482011997265315423
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,14 @@ public class WorldMaterial : MonoBehaviour
     //bool isAnimal = false;
     private void Update()
     {
-        
+        if(gameObject.CompareTag("Water"))
+        {
+            isWater = true;
+        }
+        if (gameObject.CompareTag("Bush"))
+        {
+            isPlantOn = true;
+        }
     }
 
     private void OnMouseDown()
@@ -37,7 +44,7 @@ public class WorldMaterial : MonoBehaviour
         {
             GameObject t = firTree;
             float scale = transform.localScale.y;
-
+            gameObject.tag = "Bush";
             pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
             tre = (GameObject)Instantiate(t, pos, transform.rotation);
         }
@@ -46,13 +53,9 @@ public class WorldMaterial : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Bush")
-        {
-            //Debug.Log("LES GOŁ");
-            //gameObject.tag = "Bush";
-        }
-        
-     }
+
+
+    }
     void OnMouseEnter()
     {
         //rend.material.color = hoverColor;
