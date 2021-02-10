@@ -15,22 +15,29 @@ public class AnimalMovement : MonoBehaviour
     Vector3 newDir;
     Vector3 waterDirection;
     Vector3 foodDirection;
-    public float thirstiness = 70f;
-    public float hunger = 70f;
+    public int thirstiness = 100;
+    public int hunger = 100;
+    public int maxThirstiness; 
     bool shouldGo = true;
     bool foundFood = false;
     private float maxAltitude = .5f;
-    public WorldMaterial actualCube;
+    public WorldMaterial actualCube = null;
     bool reachedGoalCube = true;
     bool currWater=false;
     bool reachedActualCube=true;
     private string selectableTag = "Selectable";
+
+    public HealthBar healthBar;
     private void Start()
     {
         myPos = transform.position;
         newDir = transform.position;
+
+        maxThirstiness = thirstiness;
+        healthBar.SetMaxHealth(maxThirstiness);
+
         InvokeRepeating("WaterNeed", 6f, 6f);
-       // InvokeRepeating("FoodNeed", 6f, 6f);
+       InvokeRepeating("FoodNeed", 7f, 7f);
     }
     void Update()
     {
@@ -42,24 +49,28 @@ public class AnimalMovement : MonoBehaviour
         {
             GoToWaterCube(actualCube);
         }
+        if (actualCube.isPlantOn)
+        {
+            GoToPlantCube(actualCube);
+        }
         if (thirstiness <= 50)
            isThirsty = true;
         if (hunger <= 50)
-            //isHungry = true;
+            isHungry = true;
         if (thirstiness == 0f)
         { 
             Destroy(gameObject);
         }
         if(hunger == 0f)
         {
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
     void SearhCubes()
     {
         if (!reachedActualCube)
             return;
-
+        
         List<WorldMaterial> foundCubes = new List<WorldMaterial>();
         var c = Physics.OverlapBox(transform.position, new Vector3(10, 10, 10), Quaternion.identity);
 
@@ -74,6 +85,10 @@ public class AnimalMovement : MonoBehaviour
             {
                 if (SearchForRandomCube(foundCubes)) return;
             }
+            else
+            {
+                if (SearchWaterCube(foundCubes)) return;
+            }
         }
         if (isHungry)
         {
@@ -81,13 +96,17 @@ public class AnimalMovement : MonoBehaviour
             {
                 if (SearchForRandomCube(foundCubes)) return;
             }
+            else
+            {
+                if (SearchPlantCube(foundCubes)) return;
+            }
         }
         if (SearchForRandomCube(foundCubes)) return;
 
     }
     private bool SearchSpecificCube(bool b, WorldMaterial currentCube)
     {
-        if (b && Mathf.Abs(actualCube.transform.localScale.y - currentCube.transform.localScale.y) < maxAltitude && Mathf.Abs(actualCube.transform.localScale.y - currentCube.transform.localScale.y) < -maxAltitude && !currentCube.isAnimalOn)
+        if (b && Mathf.Abs(actualCube.transform.localScale.y - currentCube.transform.localScale.y) < maxAltitude &&  !currentCube.isAnimalOn)
         {
             SetNewCube(currentCube);
             return true;
@@ -114,7 +133,7 @@ public class AnimalMovement : MonoBehaviour
         {
             if (SearchSpecificCube(c.isPlantOn, c))
             {
-                c.isAnimalOn = true;
+                c.isPlantOn = true;
                 return true;
             }
         }
@@ -125,9 +144,13 @@ public class AnimalMovement : MonoBehaviour
         int listCount = foundCubes.Count;
         int elementNumber = Random.Range(0, listCount);
         var currentGoal = foundCubes[elementNumber];
-        if (!currentGoal.isWater&&!currentGoal.isPlantOn)
+        if (!currentGoal.isWater && !currentGoal.isPlantOn)
         {
-            SetNewCube(currentGoal);
+            if (actualCube != null)
+            {
+                //if (Mathf.Abs(actualCube.transform.localScale.y - currentGoal.transform.localScale.y) < maxAltitude)
+                SetNewCube(currentGoal);
+            }
         }
         return false;
     }
@@ -136,6 +159,8 @@ public class AnimalMovement : MonoBehaviour
     private void SetNewCube(WorldMaterial c)
     {
         actualCube.isAnimalOn = false;
+        actualCube.isPlantOn = false;
+        //actualCube.isClear = true;
         actualCube = c;
         reachedActualCube = false;
         if (actualCube.isWater&& isThirsty)
@@ -144,6 +169,7 @@ public class AnimalMovement : MonoBehaviour
         }
         if(actualCube.isPlantOn && isHungry)
         {
+            Debug.Log("Found some food!");
             GoToPlantCube(actualCube);
         }
         else
@@ -176,7 +202,7 @@ public class AnimalMovement : MonoBehaviour
     private void GoToWaterCube(WorldMaterial c)
     {
         Vector3 waterPosition = c.transform.position;
-        if (gameObject.transform.position.y - waterPosition.y == .7f)
+        if (gameObject.transform.localScale.y - c.transform.localScale.y <= .7f)
         {
             float scale = c.transform.localScale.y;
             waterPosition = new Vector3(waterPosition.x, waterPosition.y + scale, waterPosition.z);
@@ -189,7 +215,7 @@ public class AnimalMovement : MonoBehaviour
         {
             
             Debug.Log("ahhhh");
-            thirstiness = 100f;
+            thirstiness = 100;
             reachedActualCube = true;
             isThirsty = false;
             return;
@@ -205,14 +231,16 @@ public class AnimalMovement : MonoBehaviour
         {
 
             Debug.Log("Omnomonom");
-            hunger = 100f;
+            hunger = 100;
             reachedActualCube = true;
             isHungry = false;
-            c.tag = selectableTag;
-            if(gameObject.CompareTag("Bush"))
+            var b = Physics.OverlapBox(transform.position, new Vector3(2, 2, 2), Quaternion.identity);
+            foreach(var bush in b)
             {
-                Destroy(gameObject);
+                if (gameObject.CompareTag("Bush"))
+                    Destroy(bush);
             }
+            //c.tag = selectableTag;
             return;
         }
     }
@@ -336,12 +364,13 @@ public class AnimalMovement : MonoBehaviour
     //}
     void WaterNeed()
     {
-        thirstiness -= 10f;
+        thirstiness -= 10;
+        healthBar.Health(thirstiness);
         Debug.Log("Rabbit thirstines level is " + thirstiness);
     }
     void FoodNeed()
     {
-        hunger -= 10f;
+        hunger -= 10;
         Debug.Log("Rabbit hunger level is " + hunger);
     }
 }

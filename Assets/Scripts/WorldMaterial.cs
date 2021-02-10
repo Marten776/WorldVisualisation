@@ -25,6 +25,12 @@ public class WorldMaterial : MonoBehaviour
         {
             isPlantOn = true;
         }
+        if(gameObject.CompareTag("Selectable"))
+        {
+            isPlantOn = false;
+            isWater = false;
+
+        }
     }
 
     private void OnMouseDown()
