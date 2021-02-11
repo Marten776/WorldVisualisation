@@ -18,6 +18,7 @@ public class AnimalMovement : MonoBehaviour
     public int thirstiness = 100;
     public int hunger = 100;
     public int maxThirstiness; 
+    public int maxHunger; 
     bool shouldGo = true;
     bool foundFood = false;
     private float maxAltitude = .5f;
@@ -28,13 +29,16 @@ public class AnimalMovement : MonoBehaviour
     private string selectableTag = "Selectable";
 
     public HealthBar healthBar;
+    public HungerBar hungerBar;
     private void Start()
     {
         myPos = transform.position;
         newDir = transform.position;
 
         maxThirstiness = thirstiness;
+        maxHunger = hunger;
         healthBar.SetMaxHealth(maxThirstiness);
+        hungerBar.SetMaxHunger(maxHunger);
 
         InvokeRepeating("WaterNeed", 6f, 6f);
        InvokeRepeating("FoodNeed", 7f, 7f);
@@ -235,12 +239,6 @@ public class AnimalMovement : MonoBehaviour
             reachedActualCube = true;
             isHungry = false;
             var b = Physics.OverlapBox(transform.position, new Vector3(2, 2, 2), Quaternion.identity);
-            foreach(var bush in b)
-            {
-                if (gameObject.CompareTag("Bush"))
-                    Destroy(bush);
-            }
-            //c.tag = selectableTag;
             return;
         }
     }
@@ -371,6 +369,7 @@ public class AnimalMovement : MonoBehaviour
     void FoodNeed()
     {
         hunger -= 10;
+        hungerBar.Hunger(hunger);
         Debug.Log("Rabbit hunger level is " + hunger);
     }
 }
