@@ -118,17 +118,33 @@ public class AnimalMovement : MonoBehaviour
 
         return false;
     }
+    WorldMaterial FindClosestElement(List<WorldMaterial> foundCubes)
+    {
+        WorldMaterial closestElementPosition = actualCube;
+        float closestDistanceToElement = Mathf.Infinity;
+        foreach (var element in foundCubes)
+        {
+            if (element.isWater)
+            {
+                float distanceToElement = Vector3.Distance(transform.position, element.transform.position);
+                if (distanceToElement < closestDistanceToElement)
+                {
+                    closestDistanceToElement = distanceToElement;
+                    closestElementPosition = element;
+                }
+            }
+        }
+        return closestElementPosition;
+    }
 
     private bool SearchWaterCube(List<WorldMaterial> foundCubes)
     {
-        foreach (var c in foundCubes)
-        {
-            if (SearchSpecificCube(c.isWater, c))
+            WorldMaterial closestElement=FindClosestElement(foundCubes);
+            if (SearchSpecificCube(closestElement.isWater, closestElement))
             {
-                c.isAnimalOn = true;
+            closestElement.isAnimalOn = true;
                 return true;
             }
-        }
         return false;
     }
     private bool SearchPlantCube(List<WorldMaterial> foundCubes)
@@ -163,7 +179,6 @@ public class AnimalMovement : MonoBehaviour
     private void SetNewCube(WorldMaterial c)
     {
         actualCube.isAnimalOn = false;
-        actualCube.isPlantOn = false;
         //actualCube.isClear = true;
         actualCube = c;
         reachedActualCube = false;
@@ -220,6 +235,7 @@ public class AnimalMovement : MonoBehaviour
             
             Debug.Log("ahhhh");
             thirstiness = 100;
+            healthBar.Health(thirstiness);
             reachedActualCube = true;
             isThirsty = false;
             return;
@@ -236,6 +252,7 @@ public class AnimalMovement : MonoBehaviour
 
             Debug.Log("Omnomonom");
             hunger = 100;
+            hungerBar.Hunger(hunger);
             reachedActualCube = true;
             isHungry = false;
             var b = Physics.OverlapBox(transform.position, new Vector3(2, 2, 2), Quaternion.identity);
@@ -364,12 +381,10 @@ public class AnimalMovement : MonoBehaviour
     {
         thirstiness -= 10;
         healthBar.Health(thirstiness);
-        Debug.Log("Rabbit thirstines level is " + thirstiness);
     }
     void FoodNeed()
     {
         hunger -= 10;
         hungerBar.Hunger(hunger);
-        Debug.Log("Rabbit hunger level is " + hunger);
     }
 }
