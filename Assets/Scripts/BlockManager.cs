@@ -31,6 +31,8 @@ public class BlockManager : MonoBehaviour
 
     public List<GameObject> created = new List<GameObject>();
     public List<GameObject> marked = new List<GameObject>();
+
+
     public List<GameObject> water = new List<GameObject>();
 
     private void Start()
@@ -126,7 +128,6 @@ public class BlockManager : MonoBehaviour
            
            foreach (GameObject worldItem in cre)
             {
-                //Debug.Log(worldItem.name);
                 created.Add(worldItem);
             }
 
@@ -267,15 +268,6 @@ public class BlockManager : MonoBehaviour
         }
         else if (Input.GetKeyDown("l"))
         {
-            if (tempY.y == 0)
-            {
-                Debug.Log("No possible, object destroyed!");
-
-                created.Remove(obj);
-                marked.Remove(obj);
-                Destroy(obj);
-                return;
-            }
             if(tempY.y <=.3f)
             {
                 Debug.Log("No possible, cant go so low");

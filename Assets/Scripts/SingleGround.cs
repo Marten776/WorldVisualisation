@@ -29,7 +29,7 @@ public class SingleGround : MonoBehaviour
             }
             else
             {
-                Debug.Log("Ohh boi, you have already created your ground and you can't do that again");
+                Debug.Log("You have already created your ground and you can't do that again");
                 
             }
         }
