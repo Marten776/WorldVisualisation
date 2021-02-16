@@ -28,9 +28,12 @@ public class AnimalMovement : MonoBehaviour
     bool reachedActualCube=true;
     private string selectableTag = "Selectable";
 
+
+    Animator animator;
+
     public HealthBar healthBar;
     public HungerBar hungerBar;
-    private void Start()
+    void Start()
     {
         myPos = transform.position;
         newDir = transform.position;
@@ -40,11 +43,18 @@ public class AnimalMovement : MonoBehaviour
         healthBar.SetMaxHealth(maxThirstiness);
         hungerBar.SetMaxHunger(maxHunger);
 
+
+        animator = GetComponent<Animator>();
+        Debug.Log(animator);
+
         InvokeRepeating("WaterNeed", 6f, 6f);
        InvokeRepeating("FoodNeed", 7f, 7f);
     }
     void Update()
     {
+
+
+
         SearhCubes();
 
         
@@ -56,7 +66,19 @@ public class AnimalMovement : MonoBehaviour
         if (actualCube.isPlantOn)
         {
             GoToPlantCube(actualCube);
+
         }
+
+        if (reachedActualCube == false)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else if (reachedActualCube == true)
+        {
+            animator.SetBool("isWalking", false);
+        }
+
+
         if (thirstiness <= 50)
            isThirsty = true;
         if (hunger <= 50)
@@ -210,8 +232,12 @@ public class AnimalMovement : MonoBehaviour
         }
         transform.LookAt(position);
         transform.position = Vector3.Lerp(transform.position, position, lerpTime * Time.deltaTime);
+
+
+
+
         //Debug.Log("I want to go there: "+ position);
-        if (Vector3.Distance(transform.position, position) <2f)
+        if (Vector3.Distance(transform.position, position) < 2f)
         {
             //Debug.Log("I end up here " + position);
             reachedActualCube = true;
