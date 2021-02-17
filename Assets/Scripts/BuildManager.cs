@@ -18,6 +18,9 @@ public class BuildManager : MonoBehaviour
 
     public GameObject worldMatPrefab;
     public GameObject rabbitPrefab;
+    public GameObject wolfPrefab;
+
+
 
     public GameObject treePrefab;
     public GameObject poplarTreePrefab;

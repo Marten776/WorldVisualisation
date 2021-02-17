@@ -25,11 +25,14 @@ public class AnimalMovement : MonoBehaviour
     public WorldMaterial actualCube = null;
     bool reachedGoalCube = true;
     bool currWater=false;
-    bool reachedActualCube=true;
+    public bool reachedActualCube=true;
+    public bool isDying = false;
+    public bool isEating = false;
+    bool canWalk = true;
+
     private string selectableTag = "Selectable";
 
 
-    Animator animator;
 
     public HealthBar healthBar;
     public HungerBar hungerBar;
@@ -42,22 +45,13 @@ public class AnimalMovement : MonoBehaviour
         maxHunger = hunger;
         healthBar.SetMaxHealth(maxThirstiness);
         hungerBar.SetMaxHunger(maxHunger);
-
-
-        animator = GetComponent<Animator>();
-        Debug.Log(animator);
-
         InvokeRepeating("WaterNeed", 6f, 6f);
        InvokeRepeating("FoodNeed", 7f, 7f);
     }
     void Update()
     {
-
-
-
+        if(canWalk)
         SearhCubes();
-
-        
         GoToActualCube(actualCube);
         if (actualCube.isWater)
         {
@@ -65,32 +59,37 @@ public class AnimalMovement : MonoBehaviour
         }
         if (actualCube.isPlantOn)
         {
+           if (isEating)
+               Eating();
+
             GoToPlantCube(actualCube);
-
         }
-
-        if (reachedActualCube == false)
-        {
-            animator.SetBool("isWalking", true);
-        }
-        else if (reachedActualCube == true)
-        {
-            animator.SetBool("isWalking", false);
-        }
-
-
         if (thirstiness <= 50)
            isThirsty = true;
         if (hunger <= 50)
             isHungry = true;
-        if (thirstiness == 0f)
-        { 
-            Destroy(gameObject);
-        }
-        if(hunger == 0f)
+        if(thirstiness<=0f)
         {
+            isDying = true;
+            canWalk = false;
+        }
+        if(hunger<=0f)
+        {
+            isDying = true;
+            canWalk = false;
+        }
+        if (thirstiness <= -10f)
+        {
+            isDying = false;
             Destroy(gameObject);
         }
+        if(hunger <= -10f)
+        {
+            isDying = false;
+            Destroy(gameObject);
+
+        }
+
     }
     void SearhCubes()
     {
@@ -275,16 +274,33 @@ public class AnimalMovement : MonoBehaviour
         //Debug.Log("I am thirsty ");
         if (Vector3.Distance(transform.position, waterPosition) < 2f)
         {
-
-            Debug.Log("Omnomonom");
-            hunger = 100;
-            hungerBar.Hunger(hunger);
+            isEating = true;
+            canWalk = false;
+            Eating();
+            //Debug.Log("Omnomonom");
+            //hunger = 100;
+            //hungerBar.Hunger(hunger);
+            //reachedActualCube = true;
+            //isHungry = false;
+           
+            //return;
+        }
+    }
+    void Eating()
+    {
+        hunger += 1;
+        hungerBar.Hunger(hunger);
+        Debug.Log("omnomonomon");
+        if(hunger>= 100)
+        {
             reachedActualCube = true;
+            canWalk = true;
             isHungry = false;
-            var b = Physics.OverlapBox(transform.position, new Vector3(2, 2, 2), Quaternion.identity);
+            isEating = false;
             return;
         }
     }
+
     //void FindCubes()
     //{
     //    //if (reachedGoalCube == true)
