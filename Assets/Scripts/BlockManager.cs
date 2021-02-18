@@ -62,7 +62,6 @@ public class BlockManager : MonoBehaviour
         }
         foreach(var m in marked)
         {
-            
             // podswietlanie zaznaczonych na czerwono
             var renderer = m.GetComponentsInChildren<Renderer>();
             foreach(var s in renderer)
@@ -157,7 +156,6 @@ public class BlockManager : MonoBehaviour
         {
             foreach (var v in created)
             {
-
                 Vector3 screenPos = cam.WorldToScreenPoint(v.transform.position);
                 if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
                 {
