@@ -9,6 +9,7 @@ TagManager:
   - Water
   - Rabbit
   - Bush
+  - Danger
   layers:
   - Default
   - TransparentFX

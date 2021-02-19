@@ -1,0 +1,44 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BasicNeeds : MonoBehaviour
+{
+    public int thirstiness = 100;
+    public int hunger = 100;
+
+    public int maxThirstiness;
+    public int maxHunger;
+
+
+    public HealthBar healthBar;
+    public HungerBar hungerBar;
+
+    void Start()
+    {
+        InvokeRepeating("WaterNeed", 6f, 6f);
+        InvokeRepeating("FoodNeed", 7f, 7f);
+
+        maxThirstiness = thirstiness;
+        maxHunger = hunger;
+
+        healthBar.SetMaxHealth(maxThirstiness);
+        hungerBar.SetMaxHunger(maxHunger);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    void WaterNeed()
+    {
+        thirstiness -= 10;
+        healthBar.Health(thirstiness);
+    }
+    void FoodNeed()
+    {
+        hunger -= 10;
+        hungerBar.Hunger(hunger);
+    }
+}

@@ -1611,9 +1611,11 @@ GameObject:
   - component: {fileID: 4285948753444994709}
   - component: {fileID: 4285948753444994708}
   - component: {fileID: -7037229891421043997}
+  - component: {fileID: -2469009452685148048}
+  - component: {fileID: 2785765043867565908}
   m_Layer: 0
   m_Name: Wolf_prefab
-  m_TagString: Untagged
+  m_TagString: Danger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1667,17 +1669,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720fb654926e9c34dbac8131994ee720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thirstiness: 100
-  hunger: 100
-  maxThirstiness: 0
-  maxHunger: 0
   actualCube: {fileID: 1470239609014829731, guid: 1d4d1961996f90840b51413e5bf1695a,
     type: 3}
   reachedActualCube: 1
   isDying: 0
   isEating: 0
-  healthBar: {fileID: 4285948752420989769}
-  hungerBar: {fileID: 4285948751658593825}
+  bn: {fileID: 0}
+  foundVictim: 0
+  fc: {fileID: 0}
 --- !u!136 &4285948753444994794
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1757,6 +1756,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a85479c4bcc589744a677f1474a670c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2469009452685148048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286524540073580023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8677664e1fdf32e4f925671addb09eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2785765043867565908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286524540073580023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680bca01acfdabb4398d93d412792b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thirstiness: 100
+  hunger: 100
+  maxThirstiness: 0
+  maxHunger: 0
+  healthBar: {fileID: 4285948752420989769}
+  hungerBar: {fileID: 4285948751658593825}
 --- !u!1 &4286548044072484063
 GameObject:
   m_ObjectHideFlags: 0

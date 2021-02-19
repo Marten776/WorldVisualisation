@@ -15,10 +15,10 @@ public class AnimalMovement : MonoBehaviour
     Vector3 newDir;
     Vector3 waterDirection;
     Vector3 foodDirection;
-    public int thirstiness = 100;
-    public int hunger = 100;
-    public int maxThirstiness; 
-    public int maxHunger; 
+    //public int thirstiness = 100;
+    //public int hunger = 100;
+    //public int maxThirstiness; 
+    //public int maxHunger; 
     bool shouldGo = true;
     bool foundFood = false;
     private float maxAltitude = .5f;
@@ -32,27 +32,43 @@ public class AnimalMovement : MonoBehaviour
 
     private string selectableTag = "Selectable";
 
+    public BasicNeeds bn;
 
+    public bool foundVictim = false;
 
-    public HealthBar healthBar;
-    public HungerBar hungerBar;
+    public FoodChasing fc;
+    //public HealthBar healthBar;
+    //public HungerBar hungerBar;
     void Start()
     {
         myPos = transform.position;
         newDir = transform.position;
+        bn = GetComponent<BasicNeeds>();
+        fc = GetComponent<FoodChasing>();
+        //maxThirstiness = bn.thirstiness;
+        //maxHunger = bn.hunger;
+        //healthBar.SetMaxHealth(maxThirstiness);
+        //hungerBar.SetMaxHunger(maxHunger);
 
-        maxThirstiness = thirstiness;
-        maxHunger = hunger;
-        healthBar.SetMaxHealth(maxThirstiness);
-        hungerBar.SetMaxHunger(maxHunger);
-        InvokeRepeating("WaterNeed", 6f, 6f);
-       InvokeRepeating("FoodNeed", 7f, 7f);
+        
+        //InvokeRepeating("WaterNeed", 6f, 6f);
+      // InvokeRepeating("FoodNeed", 7f, 7f);
     }
     void Update()
     {
         if(canWalk)
         SearhCubes();
         GoToActualCube(actualCube);
+
+        //if(fc.foundVictim==true)
+        //{
+         //   canWalk = false;
+        //}
+        //if(fc.foundVictim==false)
+        //{
+          //  canWalk = true;
+        //}
+
         if (actualCube.isWater)
         {
             GoToWaterCube(actualCube);
@@ -64,32 +80,43 @@ public class AnimalMovement : MonoBehaviour
 
             GoToPlantCube(actualCube);
         }
-        if (thirstiness <= 50)
+
+
+        
+        if (bn.thirstiness <= 50)
            isThirsty = true;
-        if (hunger <= 50)
+        if (bn.hunger <= 50)
             isHungry = true;
-        if(thirstiness<=0f)
+        AnimalDying();
+    }
+
+
+    void AnimalDying()
+    {
+        if (bn.thirstiness <= 0f)
         {
             isDying = true;
             canWalk = false;
         }
-        if(hunger<=0f)
+        if (bn.hunger <= 0f)
         {
             isDying = true;
             canWalk = false;
         }
-        if (thirstiness <= -10f)
+
+
+        if (bn.thirstiness <= -10f)
         {
             isDying = false;
             Destroy(gameObject);
         }
-        if(hunger <= -10f)
+
+        if (bn.hunger <= -10f)
         {
             isDying = false;
             Destroy(gameObject);
 
         }
-
     }
     void SearhCubes()
     {
@@ -259,8 +286,8 @@ public class AnimalMovement : MonoBehaviour
         {
             
             Debug.Log("ahhhh");
-            thirstiness = 100;
-            healthBar.Health(thirstiness);
+            bn.thirstiness = 100;
+            bn.healthBar.Health(bn.thirstiness);
             reachedActualCube = true;
             isThirsty = false;
             return;
@@ -288,10 +315,10 @@ public class AnimalMovement : MonoBehaviour
     }
     void Eating()
     {
-        hunger += 1;
-        hungerBar.Hunger(hunger);
+        bn.hunger += 1;
+        bn.hungerBar.Hunger(bn.hunger);
         Debug.Log("omnomonomon");
-        if(hunger>= 100)
+        if(bn.hunger>= 100)
         {
             reachedActualCube = true;
             canWalk = true;
@@ -419,14 +446,14 @@ public class AnimalMovement : MonoBehaviour
     //        }
     //    }
     //}
-    void WaterNeed()
-    {
-        thirstiness -= 10;
-        healthBar.Health(thirstiness);
-    }
-    void FoodNeed()
-    {
-        hunger -= 10;
-        hungerBar.Hunger(hunger);
-    }
+    //void WaterNeed()
+    //{
+    //    thirstiness -= 10;
+    //    healthBar.Health(thirstiness);
+    //}
+    //void FoodNeed()
+    //{
+    //    hunger -= 10;
+    //    hungerBar.Hunger(hunger);
+    //}
 }

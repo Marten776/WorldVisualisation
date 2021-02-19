@@ -15,9 +15,11 @@ GameObject:
   - component: {fileID: 1510244747209699658}
   - component: {fileID: 8329390698340815289}
   - component: {fileID: -4217208389525555172}
+  - component: {fileID: -6108960614386521956}
+  - component: {fileID: -7001577786311600848}
   m_Layer: 0
   m_Name: Wild_rabbit_v2_prefab 1
-  m_TagString: Untagged
+  m_TagString: Rabbit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,17 +73,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720fb654926e9c34dbac8131994ee720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thirstiness: 100
-  hunger: 100
-  maxThirstiness: 0
-  maxHunger: 0
   actualCube: {fileID: 1470239609014829731, guid: 1d4d1961996f90840b51413e5bf1695a,
     type: 3}
   reachedActualCube: 1
   isDying: 0
   isEating: 0
-  healthBar: {fileID: 2310089329685974336}
-  hungerBar: {fileID: 886158426185630382}
+  bn: {fileID: 0}
+  foundVictim: 0
+  fc: {fileID: 0}
 --- !u!136 &5215511202377168687
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -159,6 +158,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a85479c4bcc589744a677f1474a670c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6108960614386521956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318323849349797281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680bca01acfdabb4398d93d412792b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thirstiness: 100
+  hunger: 100
+  maxThirstiness: 0
+  maxHunger: 0
+  healthBar: {fileID: 2310089329685974336}
+  hungerBar: {fileID: 886158426185630382}
+--- !u!114 &-7001577786311600848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318323849349797281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3311e0dc5299f7642a2a8c4d69e5b0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1318337532098963441

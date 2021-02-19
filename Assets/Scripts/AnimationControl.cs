@@ -6,10 +6,12 @@ public class AnimationControl : MonoBehaviour
 {
     Animator animator;
     AnimalMovement am;
+    FoodChasing fc;
     void Start()
     {
         animator = GetComponent<Animator>();
         am = GetComponent<AnimalMovement>();
+        fc = GetComponent<FoodChasing>();
         Debug.Log(animator);
     }
 
@@ -47,5 +49,14 @@ public class AnimationControl : MonoBehaviour
             animator.SetBool("isEating", false);
         }
 
+        
+        if(am.foundVictim==true)
+        {
+            animator.SetBool("isRuning", true);
+        }
+        else if(am.foundVictim==false)
+        {
+            animator.SetBool("isRuning", false);
+        }
     }
 }
