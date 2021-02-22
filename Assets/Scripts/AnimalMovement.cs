@@ -5,31 +5,17 @@ using UnityEngine.UI;
 
 public class AnimalMovement : MonoBehaviour
 {
-    float timeStartedLerping;
-    bool shouldLerp = false;
     float lerpTime = .5f;
     float lerpWaterTime = 1f;
     bool isThirsty = false;
     bool isHungry = false;
-    Vector3 myPos;
-    Vector3 newDir;
-    Vector3 waterDirection;
-    Vector3 foodDirection;
-    //public int thirstiness = 100;
-    //public int hunger = 100;
-    //public int maxThirstiness; 
-    //public int maxHunger; 
-    bool shouldGo = true;
-    bool foundFood = false;
     private float maxAltitude = .5f;
     public WorldMaterial actualCube = null;
-    bool reachedGoalCube = true;
-    bool currWater=false;
     public bool reachedActualCube=true;
     public bool isDying = false;
     public bool isEating = false;
     bool canWalk = true;
-
+    bool isScaled = false;
     private string selectableTag = "Selectable";
 
     public BasicNeeds bn;
@@ -41,8 +27,7 @@ public class AnimalMovement : MonoBehaviour
     //public HungerBar hungerBar;
     void Start()
     {
-        myPos = transform.position;
-        newDir = transform.position;
+
         bn = GetComponent<BasicNeeds>();
         fc = GetComponent<FoodChasing>();
         //maxThirstiness = bn.thirstiness;
@@ -60,14 +45,14 @@ public class AnimalMovement : MonoBehaviour
         SearhCubes();
         GoToActualCube(actualCube);
 
-        //if(fc.foundVictim==true)
-        //{
-         //   canWalk = false;
-        //}
-        //if(fc.foundVictim==false)
-        //{
-          //  canWalk = true;
-        //}
+        if(foundVictim==true)
+        {
+            canWalk = false;
+        }
+        if (foundVictim == false)
+        {
+            canWalk = true;
+        }
 
         if (actualCube.isWater)
         {
@@ -83,10 +68,11 @@ public class AnimalMovement : MonoBehaviour
 
 
         
-        if (bn.thirstiness <= 50)
+        if (bn.thirstiness <= 50 )
            isThirsty = true;
         if (bn.hunger <= 50)
             isHungry = true;
+     
         AnimalDying();
     }
 
@@ -272,7 +258,7 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToWaterCube(WorldMaterial c)
     {
-        Vector3 waterPosition = c.transform.position;
+        Vector3 waterPosition = ScaleGoal(c.gameObject);
         if (gameObject.transform.localScale.y - c.transform.localScale.y <= .7f)
         {
             float scale = c.transform.localScale.y;
@@ -295,23 +281,26 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToPlantCube(WorldMaterial c)
     {
-        Vector3 waterPosition = c.transform.position;
-        transform.LookAt(waterPosition);
-        transform.position = Vector3.Lerp(transform.position, waterPosition, lerpWaterTime * Time.deltaTime);
-        //Debug.Log("I am thirsty ");
-        if (Vector3.Distance(transform.position, waterPosition) < 2f)
-        {
-            isEating = true;
-            canWalk = false;
-            Eating();
-            //Debug.Log("Omnomonom");
-            //hunger = 100;
-            //hungerBar.Hunger(hunger);
-            //reachedActualCube = true;
-            //isHungry = false;
-           
-            //return;
-        }
+        
+        Vector3 waterPosition = ScaleGoal(c.gameObject);
+            transform.LookAt(waterPosition);
+            transform.position = Vector3.Lerp(transform.position, waterPosition, lerpWaterTime * Time.deltaTime);
+            //Debug.Log("I am thirsty ");
+            if (Vector3.Distance(transform.position, waterPosition) < 2f)
+            {
+                isEating = true;
+                canWalk = false;
+                Eating();
+                //Debug.Log("Omnomonom");
+                //hunger = 100;
+                //hungerBar.Hunger(hunger);
+                //reachedActualCube = true;
+                //isHungry = false;
+
+                //return;
+            }
+        
+
     }
     void Eating()
     {
@@ -324,136 +313,20 @@ public class AnimalMovement : MonoBehaviour
             canWalk = true;
             isHungry = false;
             isEating = false;
+            isScaled = false;
             return;
         }
     }
 
-    //void FindCubes()
-    //{
-    //    //if (reachedGoalCube == true)
-    //   // {
-    //        Collider[] ground=Physics.OverlapBox(transform.position, new Vector3(10, 10, 10), Quaternion.identity);
-    //        Movement(ground);
+    Vector3 ScaleGoal(GameObject goal)
+    {
+        var scale = goal.transform.localScale.y;
 
-    //        if (thirstiness <= 50)
-    //        {
-    //            GoToWater(ground);
-    //        }
-    //        if (hunger <= 50)
-    //        {
-    //            GoToFood(ground);
-    //       }
-    //   // }
-    //}
-    //void Movement(Collider[] ground)
-    //{
-    //    myPos = transform.position;
-
-
-    //    if ((Vector3.Distance(myPos, newDir) < .1f || shouldGo == false))
-    //    {
-    //        int elementNumber = Random.Range(0, ground.Length);
-    //        var currentGoal = ground[elementNumber];
-    //        if (currentGoal.tag == "Selectable")
-    //        {
-    //            newDir = currentGoal.transform.position;
-    //            float newDirScale = currentGoal.transform.localScale.y;
-
-    //            newDir = new Vector3(currentGoal.transform.position.x, currentGoal.transform.position.y + newDirScale, currentGoal.transform.position.z);
-    //            //Debug.Log("I want to go there: " + newDir.y + " And my current position is: " + transform.position.y);
-    //            if (newDir.y - transform.position.y > .5f || newDir.y - transform.position.y < -.5f)
-    //            {
-    //                Debug.Log("Opps, i'd prefer not to go there");
-    //                shouldGo = false;
-    //                return;
-    //            }
-    //            transform.LookAt(newDir);
-    //           // Debug.Log(newDir);
-    //            shouldGo = true;
-
-    //        }
-    //    }
-    //    if (Vector3.Distance(myPos, newDir) > .1f)
-    //    {
-    //        transform.position = Vector3.Lerp(myPos, newDir, lerpTime * Time.deltaTime);
-    //        reachedGoalCube = true;
-    //    }
-
-    //}
-    //void GoToFood(Collider[] ground)
-    //{
-    //    myPos = transform.position;
-    //    foreach (Collider p in ground)
-    //    {
-    //        if (p.CompareTag("Bush"))
-    //        {
-    //            //Debug.Log("Yaaaay! Found some food");
-    //            foundFood = true;
-    //            waterDirection = p.transform.position;
-    //            Vector3 bushPosition = p.transform.position;
-    //            if (bushPosition.y - transform.position.y > .5f || bushPosition.y - transform.position.y < -.5f)
-    //            {
-    //                Debug.Log("Opps, i'd prefer not to go for this bush");
-    //                //shouldGo = false;
-    //                return;
-    //            }
-    //            //Debug.Log("Bush pleace " + bushPosition);
-    //            transform.LookAt(bushPosition);
-    //            transform.position = Vector3.MoveTowards(transform.position,bushPosition,lerpTime*Time.deltaTime);
-    //            //Debug.Log("Distance: " + Vector3.Distance(transform.position, bushPosition));
-    //            if (Vector3.Distance(transform.position,bushPosition) < 1f)
-    //            {
-    //                hunger = 100f;
-    //                Debug.Log("Yummy");
-    //                Destroy(p.gameObject);
-    //                return;
-    //            }
-    //        }
-    //    }
-    //}
-    //void GoToWater(Collider[] ground)
-    //{
-    //    myPos = transform.position;
-    //    foreach (Collider p in ground)
-    //    {
-    //        if (p.CompareTag("Water"))
-    //        {
-
-    //                Debug.Log("Yaaaay! Found some new water");
-    //                _ = p.transform.position;
-    //                float WaterScale = p.transform.localScale.y;
-    //                Vector3 waterDirection = new Vector3(p.transform.position.x, p.transform.position.y + WaterScale, p.transform.position.z);
-    //                if (waterDirection.y - transform.position.y > .5f || waterDirection.y - transform.position.y < -.5f)
-    //                {
-    //                    Debug.Log("Opps, i'd prefer not to go for this water");
-    //                    shouldGo = false;
-    //                    return;
-    //                }
-    //                Debug.Log("Water pleace " + waterDirection);
-    //                transform.LookAt(waterDirection);
-    //                if (Vector3.Distance(myPos, waterDirection) >= 2f)
-    //                {
-    //                    transform.position = Vector3.Lerp(myPos, waterDirection, lerpTime * Time.deltaTime);
-    //                }
-    //                else
-    //                {
-    //                    thirstiness = 100f;
-    //                    Debug.Log("ahhhh. i drinked from " + Vector3.Distance(myPos, waterDirection));
-    //                    currWater = false;
-    //                    return;
-    //                }
-
-    //        }
-    //    }
-    //}
-    //void WaterNeed()
-    //{
-    //    thirstiness -= 10;
-    //    healthBar.Health(thirstiness);
-    //}
-    //void FoodNeed()
-    //{
-    //    hunger -= 10;
-    //    hungerBar.Hunger(hunger);
-    //}
+        
+        Vector3 newGoal = new Vector3(goal.transform.position.x, goal.transform.position.y + scale, goal.transform.position.z);
+        if (goal.transform.position.y == (scale + newGoal.y))
+            return goal.transform.position;
+        else
+        return newGoal;
+    }
 }

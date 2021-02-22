@@ -6,15 +6,18 @@ public class RunningAway : MonoBehaviour
 {
 
     float lerpTime = 1f;
+
+    AnimalMovement am;
     // Start is called before the first frame update
     void Start()
     {
-        
+        am = GetComponent<AnimalMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (am.foundVictim == false)
         LookingForEnemy();
     }
 
@@ -26,9 +29,11 @@ public class RunningAway : MonoBehaviour
         {
             if(enemy.CompareTag("Danger"))
             {
-                Vector3 position = new Vector3(enemy.transform.position.x, -enemy.transform.position.y, enemy.transform.position.z);
+                am.foundVictim = true;
+                Vector3 position = enemy.transform.position;
+                position = transform.InverseTransformDirection(enemy.transform.position);
                 transform.LookAt(position);
-                transform.position = Vector3.Lerp(transform.position, position, lerpTime * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, position, lerpTime *Time.deltaTime);
             }
         }
     }

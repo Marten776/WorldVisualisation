@@ -44,7 +44,7 @@ public class AnimationControl : MonoBehaviour
         {
             animator.SetBool("isEating", true);
         }
-        else if(am.isDying==false)
+        else if(am.isEating==false)
         {
             animator.SetBool("isEating", false);
         }
@@ -52,11 +52,13 @@ public class AnimationControl : MonoBehaviour
         
         if(am.foundVictim==true)
         {
+            animator.SetBool("isWalking", false);
             animator.SetBool("isRuning", true);
         }
         else if(am.foundVictim==false)
         {
             animator.SetBool("isRuning", false);
+            animator.SetBool("isWalking", true);
         }
     }
 }

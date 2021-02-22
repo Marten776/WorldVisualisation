@@ -6,7 +6,9 @@ public class FoodChasing : MonoBehaviour
 {
     BasicNeeds bn;
     HungerBar hb;
-    float lerpTime = 5f;
+    float lerpTime = 3.5f;
+
+    GameObject goal;
 
     AnimalMovement am;
 
@@ -19,10 +21,17 @@ public class FoodChasing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(am.foundVictim==false)
         LookingForFood();
+
+        if(am.foundVictim==true)
+        {
+            goal = LookingForFood();
+            ChaisingFood(goal);
+        }
     }
 
-    public void LookingForFood()
+    public GameObject LookingForFood()
     {
         var c = Physics.OverlapBox(transform.position, new Vector3(10, 10, 10), Quaternion.identity);
 
@@ -33,21 +42,26 @@ public class FoodChasing : MonoBehaviour
                 am.foundVictim = true;
 
                 transform.LookAt(victim.transform.position);
-                transform.position = Vector3.Lerp(transform.position, victim.transform.position, lerpTime * Time.deltaTime);
-                float distance = Vector3.Distance(transform.position, victim.transform.position);
-                Debug.Log("Victim distance " + distance);
-                if(distance<=2f)
-                {
-                    Debug.Log("Delicious vistim");
-                    bn.hunger = 100;
-                    Destroy(victim.gameObject);
-                    am.foundVictim = false;
-                    hb.Hunger(100);
-                    return;
-                }
-               
+                return victim.gameObject;
             }
         }
+        return null;
 
+    }
+
+    public void ChaisingFood(GameObject food)
+    {
+        transform.position = Vector3.Lerp(transform.position, food.transform.position, lerpTime * Time.deltaTime);
+        float distance = Vector3.Distance(transform.position, food.transform.position);
+        Debug.Log("Victim distance " + distance);
+        if (distance <= 2f)
+        {
+            Debug.Log("Delicious vistim");
+            bn.hunger = 100;
+            Destroy(food.gameObject);
+            am.foundVictim = false;
+            hb.Hunger(100);
+            return;
+        }
     }
 }
