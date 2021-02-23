@@ -6,12 +6,10 @@ public class AnimationControl : MonoBehaviour
 {
     Animator animator;
     AnimalMovement am;
-    FoodChasing fc;
     void Start()
     {
         animator = GetComponent<Animator>();
         am = GetComponent<AnimalMovement>();
-        fc = GetComponent<FoodChasing>();
         Debug.Log(animator);
     }
 
@@ -28,37 +26,50 @@ public class AnimationControl : MonoBehaviour
         }
 
 
-
-        if(am.isDying==true)
+        if(am.canWalk==false)
         {
+            animator.SetBool("isWalking", false);
+        }
+
+        if (am.isDying == true)
+        { 
             animator.SetBool("isDying", true);
         }
-        else if(am.isDying==false)
-        {
-            animator.SetBool("isDying", false);
-        }
 
 
 
-        if(am.isEating==true)
-        {
-            animator.SetBool("isEating", true);
-        }
-        else if(am.isEating==false)
-        {
-            animator.SetBool("isEating", false);
-        }
+        //if(am.isEating==true)
+        //{
+        //    animator.SetBool("isEating", true);
+        //}
+        //else if(am.isEating==false)
+        //{
+        //    animator.SetBool("isEating", false);
+        //}
 
-        
-        if(am.foundVictim==true)
+
+        if (am.foundVictim == true)
         {
             animator.SetBool("isWalking", false);
             animator.SetBool("isRuning", true);
         }
-        else if(am.foundVictim==false)
+        else if (am.foundVictim == false)
         {
             animator.SetBool("isRuning", false);
-            animator.SetBool("isWalking", true);
+            if (am.isDying == false && am.isResting == false)
+            {
+                animator.SetBool("isWalking", true);
+            }
+        }
+
+        if(am.isResting==true)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isEating", true);
+        }
+        else if(am.isResting==false)
+        {
+            animator.SetBool("isEating", false);
         }
     }
 }

@@ -1613,6 +1613,7 @@ GameObject:
   - component: {fileID: -7037229891421043997}
   - component: {fileID: -2469009452685148048}
   - component: {fileID: 2785765043867565908}
+  - component: {fileID: 1549282483709942763}
   m_Layer: 0
   m_Name: Wolf_prefab
   m_TagString: Danger
@@ -1674,6 +1675,8 @@ MonoBehaviour:
   reachedActualCube: 1
   isDying: 0
   isEating: 0
+  canWalk: 1
+  isResting: 0
   bn: {fileID: 0}
   foundVictim: 0
   fc: {fileID: 0}
@@ -1686,11 +1689,11 @@ CapsuleCollider:
   m_GameObject: {fileID: 4286524540073580023}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.61
   m_Height: 0.12
   m_Direction: 1
-  m_Center: {x: 0, y: 0.73, z: 0.21}
+  m_Center: {x: 0.02, y: 0.73, z: 0.21}
 --- !u!23 &4285948753444994709
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1786,6 +1789,19 @@ MonoBehaviour:
   maxHunger: 0
   healthBar: {fileID: 4285948752420989769}
   hungerBar: {fileID: 4285948751658593825}
+--- !u!65 &1549282483709942763
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286524540073580023}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.35, y: 0.99, z: 1.59}
+  m_Center: {x: 0.03, y: 0.47, z: 0.13}
 --- !u!1 &4286548044072484063
 GameObject:
   m_ObjectHideFlags: 0

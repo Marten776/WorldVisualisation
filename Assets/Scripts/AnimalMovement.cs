@@ -11,111 +11,88 @@ public class AnimalMovement : MonoBehaviour
     bool isHungry = false;
     private float maxAltitude = .5f;
     public WorldMaterial actualCube = null;
-    public bool reachedActualCube=true;
+    public bool reachedActualCube = true;
     public bool isDying = false;
     public bool isEating = false;
-    bool canWalk = true;
+    public bool canWalk = true;
+    public bool isResting = false;
     bool isScaled = false;
     private string selectableTag = "Selectable";
-
     public BasicNeeds bn;
-
     public bool foundVictim = false;
-
     public FoodChasing fc;
-    //public HealthBar healthBar;
-    //public HungerBar hungerBar;
     void Start()
     {
-
         bn = GetComponent<BasicNeeds>();
         fc = GetComponent<FoodChasing>();
-        //maxThirstiness = bn.thirstiness;
-        //maxHunger = bn.hunger;
-        //healthBar.SetMaxHealth(maxThirstiness);
-        //hungerBar.SetMaxHunger(maxHunger);
-
-        
-        //InvokeRepeating("WaterNeed", 6f, 6f);
-      // InvokeRepeating("FoodNeed", 7f, 7f);
     }
     void Update()
     {
-        if(canWalk)
-        SearhCubes();
+        if (canWalk)
+            SearhCubes();
         GoToActualCube(actualCube);
 
-        if(foundVictim==true)
+        if (foundVictim == true)
         {
             canWalk = false;
         }
-        if (foundVictim == false)
+        if (foundVictim == false && isDying == false)
         {
             canWalk = true;
         }
-
         if (actualCube.isWater)
         {
             GoToWaterCube(actualCube);
         }
         if (actualCube.isPlantOn)
         {
-           if (isEating)
-               Eating();
+            if (isEating)
+                Eating();
 
             GoToPlantCube(actualCube);
         }
 
+        Rest();
 
-        
-        if (bn.thirstiness <= 50 )
-           isThirsty = true;
+        if (bn.thirstiness <= 50)
+            isThirsty = true;
         if (bn.hunger <= 50)
             isHungry = true;
-     
-        AnimalDying();
-    }
 
-
-    void AnimalDying()
-    {
         if (bn.thirstiness <= 0f)
         {
-            isDying = true;
             canWalk = false;
+            isDying = true;
         }
         if (bn.hunger <= 0f)
         {
-            isDying = true;
             canWalk = false;
+            isDying = true;
         }
-
 
         if (bn.thirstiness <= -10f)
         {
-            isDying = false;
+            
             Destroy(gameObject);
         }
-
         if (bn.hunger <= -10f)
         {
-            isDying = false;
+            
             Destroy(gameObject);
-
         }
     }
     void SearhCubes()
     {
         if (!reachedActualCube)
             return;
-        
+
         List<WorldMaterial> foundCubes = new List<WorldMaterial>();
-        var c = Physics.OverlapBox(transform.position, new Vector3(10, 10, 10), Quaternion.identity);
+        var c = Physics.OverlapBox(transform.position, new Vector3(15, 20, 15), Quaternion.identity);
 
         foreach (var col in c)
-         {
-             if (col.GetComponent<WorldMaterial>()) foundCubes.Add(col.GetComponent<WorldMaterial>());
-         }
+        {
+            if (col.GetComponent<WorldMaterial>()) foundCubes.Add(col.GetComponent<WorldMaterial>());
+        }
 
         if (isThirsty)
         {
@@ -144,7 +121,7 @@ public class AnimalMovement : MonoBehaviour
     }
     private bool SearchSpecificCube(bool b, WorldMaterial currentCube)
     {
-        if (b && Mathf.Abs(actualCube.transform.localScale.y - currentCube.transform.localScale.y) < maxAltitude &&  !currentCube.isAnimalOn)
+        if (b && Mathf.Abs(actualCube.transform.localScale.y - currentCube.transform.localScale.y) < maxAltitude && !currentCube.isAnimalOn)
         {
             SetNewCube(currentCube);
             return true;
@@ -173,12 +150,12 @@ public class AnimalMovement : MonoBehaviour
 
     private bool SearchWaterCube(List<WorldMaterial> foundCubes)
     {
-            WorldMaterial closestElement=FindClosestElement(foundCubes);
-            if (SearchSpecificCube(closestElement.isWater, closestElement))
-            {
+        WorldMaterial closestElement = FindClosestElement(foundCubes);
+        if (SearchSpecificCube(closestElement.isWater, closestElement))
+        {
             closestElement.isAnimalOn = true;
-                return true;
-            }
+            return true;
+        }
         return false;
     }
     private bool SearchPlantCube(List<WorldMaterial> foundCubes)
@@ -216,11 +193,11 @@ public class AnimalMovement : MonoBehaviour
         //actualCube.isClear = true;
         actualCube = c;
         reachedActualCube = false;
-        if (actualCube.isWater&& isThirsty)
+        if (actualCube.isWater && isThirsty)
         {
             GoToWaterCube(actualCube);
         }
-        if(actualCube.isPlantOn && isHungry)
+        if (actualCube.isPlantOn && isHungry)
         {
             Debug.Log("Found some food!");
             GoToPlantCube(actualCube);
@@ -228,15 +205,15 @@ public class AnimalMovement : MonoBehaviour
         else
             GoToActualCube(actualCube);
 
-        
+
 
     }
 
     private void GoToActualCube(WorldMaterial c)
     {
-        
+
         Vector3 position = c.transform.position;
-        if(gameObject.transform.position.y > position.y)
+        if (gameObject.transform.position.y > position.y)
         {
             float scale = c.transform.localScale.y;
             position = new Vector3(position.x, position.y + scale, position.z);
@@ -270,7 +247,7 @@ public class AnimalMovement : MonoBehaviour
         //Debug.Log("I am thirsty ");
         if (Vector3.Distance(transform.position, waterPosition) < 2f)
         {
-            
+
             Debug.Log("ahhhh");
             bn.thirstiness = 100;
             bn.healthBar.Health(bn.thirstiness);
@@ -281,25 +258,25 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToPlantCube(WorldMaterial c)
     {
-        
-        Vector3 waterPosition = ScaleGoal(c.gameObject);
-            transform.LookAt(waterPosition);
-            transform.position = Vector3.Lerp(transform.position, waterPosition, lerpWaterTime * Time.deltaTime);
-            //Debug.Log("I am thirsty ");
-            if (Vector3.Distance(transform.position, waterPosition) < 2f)
-            {
-                isEating = true;
-                canWalk = false;
-                Eating();
-                //Debug.Log("Omnomonom");
-                //hunger = 100;
-                //hungerBar.Hunger(hunger);
-                //reachedActualCube = true;
-                //isHungry = false;
 
-                //return;
-            }
-        
+        Vector3 waterPosition = ScaleGoal(c.gameObject);
+        transform.LookAt(waterPosition);
+        transform.position = Vector3.Lerp(transform.position, waterPosition, lerpWaterTime * Time.deltaTime);
+        //Debug.Log("I am thirsty ");
+        if (Vector3.Distance(transform.position, waterPosition) < 2f)
+        {
+            isEating = true;
+            canWalk = false;
+            Eating();
+            //Debug.Log("Omnomonom");
+            //hunger = 100;
+            //hungerBar.Hunger(hunger);
+            //reachedActualCube = true;
+            //isHungry = false;
+
+            //return;
+        }
+
 
     }
     void Eating()
@@ -307,7 +284,7 @@ public class AnimalMovement : MonoBehaviour
         bn.hunger += 1;
         bn.hungerBar.Hunger(bn.hunger);
         Debug.Log("omnomonomon");
-        if(bn.hunger>= 100)
+        if (bn.hunger >= 100)
         {
             reachedActualCube = true;
             canWalk = true;
@@ -322,11 +299,35 @@ public class AnimalMovement : MonoBehaviour
     {
         var scale = goal.transform.localScale.y;
 
-        
+
         Vector3 newGoal = new Vector3(goal.transform.position.x, goal.transform.position.y + scale, goal.transform.position.z);
         if (goal.transform.position.y == (scale + newGoal.y))
             return goal.transform.position;
         else
-        return newGoal;
+            return newGoal;
     }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, 5f);
+        }
+
+    void Rest()
+    {
+        if(bn.hunger > 60&&bn.thirstiness >60)
+        {
+            if(bn.thirstiness==80)
+            {
+                canWalk = false;
+                isResting = true;
+            }
+            if(bn.thirstiness<80)
+            {
+                canWalk = true;
+                isResting = false;
+            }
+        }
+    }
+
 }
