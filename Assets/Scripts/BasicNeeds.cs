@@ -25,20 +25,14 @@ public class BasicNeeds : MonoBehaviour
         healthBar.SetMaxHealth(maxThirstiness);
         hungerBar.SetMaxHunger(maxHunger);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     void WaterNeed()
     {
-        thirstiness -= 10;
+        thirstiness -= 5;
         healthBar.Health(thirstiness);
     }
     void FoodNeed()
     {
-        hunger -= 10;
+        hunger -= 5;
         hungerBar.Hunger(hunger);
     }
 }

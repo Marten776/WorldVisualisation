@@ -12,22 +12,22 @@ public class BushSelection : MonoBehaviour
 
     public void FirstBushChoice()
     {
-        buildManager.SetTree(buildManager.firstBushPrefab);
+        buildManager.SetBush(buildManager.firstBushPrefab);
     }
     public void SecoundBushChoice()
     {
-        buildManager.SetTree(buildManager.secoundBushPrefab);
+        buildManager.SetBush(buildManager.secoundBushPrefab);
     }
     public void ThirdBushChoice()
     {
-        buildManager.SetTree(buildManager.thirdBushPrefab);
+        buildManager.SetBush(buildManager.thirdBushPrefab);
     }
     public void FourthBushChoice()
     {
-        buildManager.SetTree(buildManager.fourthBushPrefab);
+        buildManager.SetBush(buildManager.fourthBushPrefab);
     }
     public void FifthBushChoice()
     {
-        buildManager.SetTree(buildManager.fifthBushPrefab);
+        buildManager.SetBush(buildManager.fifthBushPrefab);
     }
 }

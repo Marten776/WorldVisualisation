@@ -48,6 +48,7 @@ public class BuildManager : MonoBehaviour
     }
     private GameObject animals;
     private GameObject trees;
+    private GameObject bushes;
 
     public void SetAnimal(GameObject animal)
     {
@@ -57,6 +58,11 @@ public class BuildManager : MonoBehaviour
     public void SetTree(GameObject tree)
     {
         trees = tree;
+    }    
+    
+    public void SetBush(GameObject bush)
+    {
+        bushes = bush;
     }
 
     public GameObject GetTreeToBuild()
@@ -64,6 +70,13 @@ public class BuildManager : MonoBehaviour
         isCalled = true;
         return trees;
     }
+
+    public GameObject GetBushToBuild()
+    {
+        isCalled = true;
+        return bushes;
+    }
+
     public GameObject GetWorldMatToBuild()
     {
         return worldMata;

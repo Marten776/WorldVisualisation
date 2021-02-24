@@ -61,15 +61,5 @@ public class AnimationControl : MonoBehaviour
                 animator.SetBool("isWalking", true);
             }
         }
-
-        if(am.isResting==true)
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isEating", true);
-        }
-        else if(am.isResting==false)
-        {
-            animator.SetBool("isEating", false);
-        }
     }
 }

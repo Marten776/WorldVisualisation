@@ -9,7 +9,7 @@ public class AnimalMovement : MonoBehaviour
     float lerpWaterTime = 1f;
     bool isThirsty = false;
     bool isHungry = false;
-    private float maxAltitude = .5f;
+    private float maxAltitude = .66f;
     public WorldMaterial actualCube = null;
     public bool reachedActualCube = true;
     public bool isDying = false;
@@ -51,9 +51,6 @@ public class AnimalMovement : MonoBehaviour
 
             GoToPlantCube(actualCube);
         }
-
-        Rest();
-
         if (bn.thirstiness <= 50)
             isThirsty = true;
         if (bn.hunger <= 50)
@@ -121,7 +118,7 @@ public class AnimalMovement : MonoBehaviour
     }
     private bool SearchSpecificCube(bool b, WorldMaterial currentCube)
     {
-        if (b && Mathf.Abs(actualCube.transform.localScale.y - currentCube.transform.localScale.y) < maxAltitude && !currentCube.isAnimalOn)
+        if (b && Mathf.Abs(actualCube.transform.localScale.y - currentCube.transform.localScale.y) < maxAltitude && !currentCube.isAnimalOn && !currentCube.isTreeOn)
         {
             SetNewCube(currentCube);
             return true;
@@ -175,18 +172,36 @@ public class AnimalMovement : MonoBehaviour
         int listCount = foundCubes.Count;
         int elementNumber = Random.Range(0, listCount);
         var currentGoal = foundCubes[elementNumber];
-        if (!currentGoal.isWater && !currentGoal.isPlantOn)
+        if (!currentGoal.isWater && !currentGoal.isPlantOn && !currentGoal.isTreeOn)
         {
-            if (actualCube != null)
+            if(transform.position.y < currentGoal.transform.localScale.y)
             {
-                //if (Mathf.Abs(actualCube.transform.localScale.y - currentGoal.transform.localScale.y) < maxAltitude)
-                SetNewCube(currentGoal);
+                if (currentGoal.transform.localScale.y - transform.position.y > maxAltitude)
+                    return false;
+                else
+                {
+                    if (actualCube != null)
+                    {
+                        SetNewCube(currentGoal);
+                    }
+                }
             }
+            if (transform.position.y > currentGoal.transform.localScale.y)
+            {
+                if (transform.position.y - currentGoal.transform.localScale.y > maxAltitude)
+                    return false;
+                else
+                {
+                    if (actualCube != null)
+                    {
+                        SetNewCube(currentGoal);
+                    }
+                }
+            }
+
         }
         return false;
     }
-
-
     private void SetNewCube(WorldMaterial c)
     {
         actualCube.isAnimalOn = false;
@@ -204,11 +219,7 @@ public class AnimalMovement : MonoBehaviour
         }
         else
             GoToActualCube(actualCube);
-
-
-
     }
-
     private void GoToActualCube(WorldMaterial c)
     {
 
@@ -221,10 +232,6 @@ public class AnimalMovement : MonoBehaviour
         }
         transform.LookAt(position);
         transform.position = Vector3.Lerp(transform.position, position, lerpTime * Time.deltaTime);
-
-
-
-
         //Debug.Log("I want to go there: "+ position);
         if (Vector3.Distance(transform.position, position) < 2f)
         {
@@ -235,7 +242,7 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToWaterCube(WorldMaterial c)
     {
-        Vector3 waterPosition = ScaleGoal(c.gameObject);
+        Vector3 waterPosition = c.transform.position;
         if (gameObject.transform.localScale.y - c.transform.localScale.y <= .7f)
         {
             float scale = c.transform.localScale.y;
@@ -312,22 +319,5 @@ public class AnimalMovement : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, 5f);
         }
-
-    void Rest()
-    {
-        if(bn.hunger > 60&&bn.thirstiness >60)
-        {
-            if(bn.thirstiness==80)
-            {
-                canWalk = false;
-                isResting = true;
-            }
-            if(bn.thirstiness<80)
-            {
-                canWalk = true;
-                isResting = false;
-            }
-        }
-    }
 
 }

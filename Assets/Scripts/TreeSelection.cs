@@ -12,17 +12,14 @@ public class TreeSelection : MonoBehaviour
 
     public void FirTreeChoice()
     {
-        //Debug.Log("Fir Tree Choiced");
         buildManager.SetTree(buildManager.treePrefab);
     }
     public void PoplarTreeChoice()
     {
-        //Debug.Log("Fir Tree Choiced");
         buildManager.SetTree(buildManager.poplarTreePrefab);
     }
     public void OakTreeChoice()
-    {
-        //Debug.Log("Fir Tree Choiced");
+    { 
         buildManager.SetTree(buildManager.oakTreePrefab);
     }
 }

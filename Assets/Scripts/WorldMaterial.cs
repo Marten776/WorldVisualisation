@@ -8,12 +8,14 @@ public class WorldMaterial : MonoBehaviour
 {
     private GameObject rab;
     private GameObject tre;
+    private GameObject bus;
     GameObject animal;
-    GameObject firTree;
-    GameObject currTree=null;
+    GameObject tree;
+    GameObject bush;
     public Vector3 pos;
     public bool isAnimalOn = false;
     public bool isPlantOn;
+    public bool isTreeOn;
     public bool isWater;
     public Vector3 positionWhere;
 
@@ -25,24 +27,6 @@ public class WorldMaterial : MonoBehaviour
             isWater = true;
         }
 
-        if (firTree != null)
-        {
-            currTree = firTree;
-            firTree = null;
-        }
-        if (Input.GetMouseButtonDown(0)&& currTree != null)
-        {
-            GameObject t = currTree;
-            float scale = transform.localScale.y;
-            isPlantOn = true;
-            pos = new Vector3(positionWhere.x, positionWhere.y + scale, positionWhere.z);
-            tre = (GameObject)Instantiate(t, pos, transform.rotation);
-            
-        }
-        if(Input.GetMouseButtonDown(1))
-        {
-            currTree = null;
-        }
     }
     void OnMouseDown()
     {
@@ -51,7 +35,8 @@ public class WorldMaterial : MonoBehaviour
 
 
         animal = BuildManager.instance.GetAnimalToBuild();
-        firTree = BuildManager.instance.GetTreeToBuild();
+        tree = BuildManager.instance.GetTreeToBuild();
+        bush = BuildManager.instance.GetBushToBuild();
         
         if (animal != null)
         {
@@ -60,35 +45,25 @@ public class WorldMaterial : MonoBehaviour
             pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
             rab = (GameObject)Instantiate(rabbit, pos, transform.rotation);
         }
-        positionWhere = transform.position;
-
-        //else if (firTree != null)
-        //{
-        //    GameObject t = firTree;
-        //    float scale = transform.localScale.y;
-        //    isPlantOn = true;
-        //    pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
-        //    tre = (GameObject)Instantiate(t, pos, transform.rotation);
-        //}
-        //AddTree();
-    }
-
-
-    void AddTree()
-    {
-        GameObject t = firTree;
-        float scale = transform.localScale.y;
-        isPlantOn = true;
-        pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
-        tre = (GameObject)Instantiate(t, pos, transform.rotation);
-        firTree = null;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
+        else if (tree != null)
+        {
+            GameObject t = tree;
+            float scale = transform.localScale.y;
+            isTreeOn = true;
+            pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
+            tre = (GameObject)Instantiate(t, pos, transform.rotation);
+        }
+        else if(bush!=null)
+        {
+            GameObject b = bush;
+            float scale = transform.localScale.y;
+            isPlantOn = true;
+            pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
+            bus = (GameObject)Instantiate(b, pos, transform.rotation);
+        }
 
     }
+
     void OnMouseEnter()
     {
         //rend.material.color = hoverColor;
