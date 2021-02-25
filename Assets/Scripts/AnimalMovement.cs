@@ -9,7 +9,7 @@ public class AnimalMovement : MonoBehaviour
     float lerpWaterTime = 1f;
     bool isThirsty = false;
     bool isHungry = false;
-    private float maxAltitude = .66f;
+    private float maxAltitude = 1.5f;
     public WorldMaterial actualCube = null;
     public bool reachedActualCube = true;
     public bool isDying = false;
@@ -21,6 +21,7 @@ public class AnimalMovement : MonoBehaviour
     public BasicNeeds bn;
     public bool foundVictim = false;
     public FoodChasing fc;
+    public List<Vector3> foundWater = new List<Vector3>();
     void Start()
     {
         bn = GetComponent<BasicNeeds>();
@@ -67,14 +68,16 @@ public class AnimalMovement : MonoBehaviour
             isDying = true;
         }
 
+
+
         if (bn.thirstiness <= -10f)
         {
-            
+            Debug.Log(gameObject.name + " Died of hunger");
             Destroy(gameObject);
         }
         if (bn.hunger <= -10f)
         {
-            
+            Debug.Log(gameObject.name + " Died of hunger");
             Destroy(gameObject);
         }
     }
@@ -93,8 +96,14 @@ public class AnimalMovement : MonoBehaviour
 
         if (isThirsty)
         {
+            if (bn.thirstiness < 35 && foundWater.Count > 0)
+            {
+                Debug.Log("I remember something...");
+                GoToFoundWater();
+            }
             if (SearchWaterCube(foundCubes) == false)
             {
+
                 if (SearchForRandomCube(foundCubes)) return;
             }
             else
@@ -243,6 +252,8 @@ public class AnimalMovement : MonoBehaviour
     private void GoToWaterCube(WorldMaterial c)
     {
         Vector3 waterPosition = c.transform.position;
+        
+        
         if (gameObject.transform.localScale.y - c.transform.localScale.y <= .7f)
         {
             float scale = c.transform.localScale.y;
@@ -250,11 +261,14 @@ public class AnimalMovement : MonoBehaviour
         }
 
         transform.LookAt(waterPosition);
+        
+        
         transform.position = Vector3.Lerp(transform.position, waterPosition, lerpWaterTime * Time.deltaTime);
         //Debug.Log("I am thirsty ");
         if (Vector3.Distance(transform.position, waterPosition) < 2f)
         {
-
+            foundWater.Add(waterPosition);
+            Debug.Log("I found that many waters " + foundWater.Count);
             Debug.Log("ahhhh");
             bn.thirstiness = 100;
             bn.healthBar.Health(bn.thirstiness);
@@ -300,6 +314,24 @@ public class AnimalMovement : MonoBehaviour
             isScaled = false;
             return;
         }
+    }
+
+    void GoToFoundWater()
+    {
+        int number = foundWater.Count;
+        Vector3 waterPosition = foundWater[number - 1];
+        transform.position = Vector3.Lerp(transform.position, waterPosition, lerpWaterTime * Time.deltaTime);
+
+       if (Vector3.Distance(transform.position, waterPosition) < 2f)
+       {
+
+         Debug.Log("ahhhh, I always love to drink here");
+         bn.thirstiness = 100;
+         bn.healthBar.Health(bn.thirstiness);
+         reachedActualCube = true;
+         isThirsty = false;
+         return;
+       }
     }
 
     Vector3 ScaleGoal(GameObject goal)

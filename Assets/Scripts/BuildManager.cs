@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager instance;
-    bool isCalled=false;
+    public bool isCalled=false;
     void Awake()
     {
         if(instance != null)
@@ -41,6 +41,13 @@ public class BuildManager : MonoBehaviour
     {
         if(isCalled==true)
         {
+            //animals = null;
+            // trees = null;
+            // bushes = null;
+        }
+        if (Input.GetKeyDown("c"))
+        {
+            bushes = null;
             animals = null;
             trees = null;
         }
@@ -73,7 +80,6 @@ public class BuildManager : MonoBehaviour
 
     public GameObject GetBushToBuild()
     {
-        isCalled = true;
         return bushes;
     }
 

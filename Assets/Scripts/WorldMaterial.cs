@@ -18,7 +18,7 @@ public class WorldMaterial : MonoBehaviour
     public bool isTreeOn;
     public bool isWater;
     public Vector3 positionWhere;
-
+    
     //bool isAnimal = false;
     void Update()
     {
@@ -26,40 +26,41 @@ public class WorldMaterial : MonoBehaviour
         {
             isWater = true;
         }
+        else if(!gameObject.CompareTag("Water"))
+        {
+            isWater = false;
+        }
 
     }
     void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-
-
         animal = BuildManager.instance.GetAnimalToBuild();
         tree = BuildManager.instance.GetTreeToBuild();
         bush = BuildManager.instance.GetBushToBuild();
-        
         if (animal != null)
         {
-            GameObject rabbit = animal;
+            GameObject currentAnimal = animal;
             float scale = transform.localScale.y;
             pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
-            rab = (GameObject)Instantiate(rabbit, pos, transform.rotation);
+            Instantiate(currentAnimal, pos, transform.rotation);
         }
-        else if (tree != null)
+        if (bush != null)
         {
-            GameObject t = tree;
-            float scale = transform.localScale.y;
-            isTreeOn = true;
-            pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
-            tre = (GameObject)Instantiate(t, pos, transform.rotation);
-        }
-        else if(bush!=null)
-        {
-            GameObject b = bush;
+            GameObject currentBush = bush;
             float scale = transform.localScale.y;
             isPlantOn = true;
             pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
-            bus = (GameObject)Instantiate(b, pos, transform.rotation);
+            Instantiate(currentBush, pos, transform.rotation);
+        }
+        if (tree != null)
+        {
+            GameObject currentTree = tree;
+            float scale = transform.localScale.y;
+            isTreeOn = true;
+            pos = new Vector3(transform.position.x, transform.position.y + scale, transform.position.z);
+            Instantiate(currentTree, pos, transform.rotation);
         }
 
     }

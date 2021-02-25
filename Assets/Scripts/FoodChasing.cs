@@ -6,7 +6,7 @@ public class FoodChasing : MonoBehaviour
 {
     BasicNeeds bn;
     HungerBar hb;
-    float lerpTime = 3.5f;
+    float lerpTime = 5f;
 
     GameObject goal;
 
