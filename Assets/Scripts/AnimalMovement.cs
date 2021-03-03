@@ -69,7 +69,6 @@ public class AnimalMovement : MonoBehaviour
         }
 
 
-
         if (bn.thirstiness <= -10f)
         {
             Debug.Log(gameObject.name + " Died of hunger");
@@ -87,7 +86,7 @@ public class AnimalMovement : MonoBehaviour
             return;
 
         List<WorldMaterial> foundCubes = new List<WorldMaterial>();
-        var c = Physics.OverlapBox(transform.position, new Vector3(15, 20, 15), Quaternion.identity);
+        var c = Physics.OverlapBox(transform.position, new Vector3(10, 10, 10), Quaternion.identity);
 
         foreach (var col in c)
         {
@@ -96,11 +95,6 @@ public class AnimalMovement : MonoBehaviour
 
         if (isThirsty)
         {
-            if (bn.thirstiness < 35 && foundWater.Count > 0)
-            {
-                Debug.Log("I remember something...");
-                GoToFoundWater();
-            }
             if (SearchWaterCube(foundCubes) == false)
             {
 
@@ -214,7 +208,6 @@ public class AnimalMovement : MonoBehaviour
     private void SetNewCube(WorldMaterial c)
     {
         actualCube.isAnimalOn = false;
-        //actualCube.isClear = true;
         actualCube = c;
         reachedActualCube = false;
         if (actualCube.isWater && isThirsty)
@@ -231,20 +224,16 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToActualCube(WorldMaterial c)
     {
-
         Vector3 position = c.transform.position;
         if (gameObject.transform.position.y > position.y)
         {
             float scale = c.transform.localScale.y;
             position = new Vector3(position.x, position.y + scale, position.z);
-
         }
         transform.LookAt(position);
         transform.position = Vector3.Lerp(transform.position, position, lerpTime * Time.deltaTime);
-        //Debug.Log("I want to go there: "+ position);
         if (Vector3.Distance(transform.position, position) < 2f)
         {
-            //Debug.Log("I end up here " + position);
             reachedActualCube = true;
             return;
         }
@@ -279,7 +268,6 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToPlantCube(WorldMaterial c)
     {
-
         Vector3 waterPosition = ScaleGoal(c.gameObject);
         transform.LookAt(waterPosition);
         transform.position = Vector3.Lerp(transform.position, waterPosition, lerpWaterTime * Time.deltaTime);
@@ -289,13 +277,6 @@ public class AnimalMovement : MonoBehaviour
             isEating = true;
             canWalk = false;
             Eating();
-            //Debug.Log("Omnomonom");
-            //hunger = 100;
-            //hungerBar.Hunger(hunger);
-            //reachedActualCube = true;
-            //isHungry = false;
-
-            //return;
         }
 
 
@@ -316,23 +297,23 @@ public class AnimalMovement : MonoBehaviour
         }
     }
 
-    void GoToFoundWater()
-    {
-        int number = foundWater.Count;
-        Vector3 waterPosition = foundWater[number - 1];
-        transform.position = Vector3.Lerp(transform.position, waterPosition, lerpWaterTime * Time.deltaTime);
+    //void GoToFoundWater()
+    //{
+    //    int number = foundWater.Count;
+    //    Vector3 waterPosition = foundWater[number - 1];
+    //    transform.position = Vector3.Lerp(transform.position, waterPosition, lerpWaterTime * Time.deltaTime);
 
-       if (Vector3.Distance(transform.position, waterPosition) < 2f)
-       {
+    //   if (Vector3.Distance(transform.position, waterPosition) < 2f)
+    //   {
 
-         Debug.Log("ahhhh, I always love to drink here");
-         bn.thirstiness = 100;
-         bn.healthBar.Health(bn.thirstiness);
-         reachedActualCube = true;
-         isThirsty = false;
-         return;
-       }
-    }
+    //     Debug.Log("ahhhh, I always love to drink here");
+    //     bn.thirstiness = 100;
+    //     bn.healthBar.Health(bn.thirstiness);
+    //     reachedActualCube = true;
+    //     isThirsty = false;
+    //     return;
+    //   }
+    //}
 
     Vector3 ScaleGoal(GameObject goal)
     {
@@ -349,7 +330,7 @@ public class AnimalMovement : MonoBehaviour
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, 5f);
+            Gizmos.DrawWireSphere(transform.position, 10f);
         }
 
 }

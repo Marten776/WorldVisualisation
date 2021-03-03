@@ -5,7 +5,6 @@ using UnityEngine;
 public class FoodChasing : MonoBehaviour
 {
     BasicNeeds bn;
-    HungerBar hb;
     float lerpTime = 5f;
 
     GameObject goal;
@@ -60,7 +59,6 @@ public class FoodChasing : MonoBehaviour
             bn.hunger = 100;
             Destroy(food.gameObject);
             am.foundVictim = false;
-            hb.Hunger(100);
             return;
         }
     }
