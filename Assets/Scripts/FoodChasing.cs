@@ -16,7 +16,6 @@ public class FoodChasing : MonoBehaviour
         bn = GetComponent<BasicNeeds>();
         am = GetComponent<AnimalMovement>();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -47,15 +46,12 @@ public class FoodChasing : MonoBehaviour
         return null;
 
     }
-
     public void ChaisingFood(GameObject food)
     {
         transform.position = Vector3.Lerp(transform.position, food.transform.position, lerpTime * Time.deltaTime);
         float distance = Vector3.Distance(transform.position, food.transform.position);
-        Debug.Log("Victim distance " + distance);
         if (distance <= 2f)
         {
-            Debug.Log("Delicious vistim");
             bn.hunger = 100;
             Destroy(food.gameObject);
             am.foundVictim = false;
