@@ -18,7 +18,6 @@ public class WorldMaterial : MonoBehaviour
     public bool isTreeOn;
     public bool isWater;
     public Vector3 positionWhere;
-    
     //bool isAnimal = false;
     void Update()
     {

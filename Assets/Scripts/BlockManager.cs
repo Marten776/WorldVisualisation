@@ -64,8 +64,10 @@ public class BlockManager : MonoBehaviour
         {
             // podswietlanie zaznaczonych na czerwono
             var renderer = m.GetComponentsInChildren<Renderer>();
-            foreach(var s in renderer)
+            foreach (var s in renderer)
+            {
                 s.material = highlightedMat;
+            }
         }
         
         if (Input.GetKeyDown("c"))

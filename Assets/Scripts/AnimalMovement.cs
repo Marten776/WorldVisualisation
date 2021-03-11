@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class AnimalMovement : MonoBehaviour
 {
@@ -22,10 +23,15 @@ public class AnimalMovement : MonoBehaviour
     public bool foundVictim = false;
     public FoodChasing fc;
     public List<Vector3> foundWater = new List<Vector3>();
+
+    public event Action onAnimalDied;
+
+
     void Start()
     {
         bn = GetComponent<BasicNeeds>();
         fc = GetComponent<FoodChasing>();
+        TimeController.instance.StartTimer();
     }
     void Update()
     {
@@ -71,14 +77,37 @@ public class AnimalMovement : MonoBehaviour
 
         if (bn.thirstiness <= -10f)
         {
-            Debug.Log(gameObject.name + " Died of hunger");
+            LastMessage();  
+            Debug.Log("Animal died");
+            onAnimalDied?.Invoke();
             Destroy(gameObject);
         }
         if (bn.hunger <= -10f)
         {
-            Debug.Log(gameObject.name + " Died of hunger");
+            LastMessage();
+            Debug.Log("Animal died");
+            onAnimalDied?.Invoke();
             Destroy(gameObject);
         }
+    }
+
+    public string LastMessage()
+    {
+        TimeController.instance.StopTimer();
+        string time = TimeController.instance.TimeWas();
+        string animal = gameObject.name;
+        string why="";
+        if(bn.hunger<=-10f)
+        {
+            why = "hunger";
+        }
+        else if(bn.thirstiness <= -10f)
+        {
+            why = "thirstiness";
+        }
+        string message = animal + " Died of "+ why +", he lived " + time;
+        //OnAnimalDied?.Invoke();
+        return message;
     }
     void SearchCubes()
     {
@@ -173,7 +202,7 @@ public class AnimalMovement : MonoBehaviour
     private bool SearchForRandomCube(List<WorldMaterial> foundCubes)
     {
         int listCount = foundCubes.Count;
-        int elementNumber = Random.Range(0, listCount);
+        int elementNumber = UnityEngine.Random.Range(0, listCount);
         var currentGoal = foundCubes[elementNumber];
         if (!currentGoal.isWater && !currentGoal.isPlantOn && !currentGoal.isTreeOn)
         {
@@ -252,7 +281,9 @@ public class AnimalMovement : MonoBehaviour
 
         if (Vector3.Distance(transform.position, waterPosition) < 2f)
         {
+            
             bn.thirstiness = 100;
+            Debug.Log(gameObject.name + " Just drank something");
             c.isAnimalOn = false;
             bn.healthBar.Health(bn.thirstiness);
             reachedActualCube = true;
@@ -275,10 +306,11 @@ public class AnimalMovement : MonoBehaviour
     }
     void Eating()
     {
-        bn.hunger += 1;
+        bn.hunger += 2;
         bn.hungerBar.Hunger(bn.hunger);
         if (bn.hunger >= 100)
         {
+            Debug.Log(gameObject.name + " Just ate something");
             reachedActualCube = true;
             canWalk = true;
             isHungry = false;

@@ -16,8 +16,8 @@ public class BasicNeeds : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("WaterNeed", 10f, 10f);
-        InvokeRepeating("FoodNeed", 15f, 15f);
+        InvokeRepeating("WaterNeed", 2f, 2f);
+        InvokeRepeating("FoodNeed", 10f, 10f);
 
         maxThirstiness = thirstiness;
         maxHunger = hunger;

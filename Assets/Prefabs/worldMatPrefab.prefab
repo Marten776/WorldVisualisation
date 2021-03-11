@@ -150,3 +150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 0, y: 0, z: 0}
+  isAnimalOn: 0
+  isPlantOn: 0
+  isTreeOn: 0
+  isWater: 0
+  positionWhere: {x: 0, y: 0, z: 0}
+  defaultMat: {fileID: 2100000, guid: 2dff59ba940bd634c8957829bf2ab5fe, type: 2}
