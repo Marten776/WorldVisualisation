@@ -11,17 +11,15 @@ public class GoneAnimalPanel : MonoBehaviour
     {
         animalMovement = GetComponent<AnimalMovement>();
     }
-    private void OnEnable()
+    private void Update()
     {
-        animalMovement.onAnimalDied += ActivatePanel; 
-    }
-    private void OnDisable()
-    {
-        animalMovement.onAnimalDied -= ActivatePanel;
+        if(animalMovement.animalDied==true)
+        {
+            ActivatePanel();
+        }
     }
     private void ActivatePanel()
     {
-        Debug.Log("I know");
         gameObject.SetActive(true);
     }
     private void SetText(string msg)

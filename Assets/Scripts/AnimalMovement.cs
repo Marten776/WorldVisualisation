@@ -24,6 +24,8 @@ public class AnimalMovement : MonoBehaviour
     public FoodChasing fc;
     public List<Vector3> foundWater = new List<Vector3>();
 
+    public bool animalDied = false;
+
     public event Action onAnimalDied;
 
 
@@ -79,14 +81,14 @@ public class AnimalMovement : MonoBehaviour
         {
             LastMessage();  
             Debug.Log("Animal died");
-            onAnimalDied?.Invoke();
+            animalDied = true;
             Destroy(gameObject);
         }
         if (bn.hunger <= -10f)
         {
             LastMessage();
             Debug.Log("Animal died");
-            onAnimalDied?.Invoke();
+            animalDied = true;
             Destroy(gameObject);
         }
     }
