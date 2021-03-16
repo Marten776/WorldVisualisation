@@ -58,7 +58,7 @@ public class BlockManager : MonoBehaviour
         }
         if (created.Count>0)
         {
-            Highlighting();
+            //Highlighting();
         }
         foreach(var m in marked)
         {

@@ -23,12 +23,7 @@ public class AnimalMovement : MonoBehaviour
     public bool foundVictim = false;
     public FoodChasing fc;
     public List<Vector3> foundWater = new List<Vector3>();
-
-    public bool animalDied = false;
-
-    public event Action onAnimalDied;
-
-
+    public GameObject goneAnimalPanel;
     void Start()
     {
         bn = GetComponent<BasicNeeds>();
@@ -81,14 +76,14 @@ public class AnimalMovement : MonoBehaviour
         {
             LastMessage();  
             Debug.Log("Animal died");
-            animalDied = true;
+            goneAnimalPanel.gameObject.SetActive(true);
             Destroy(gameObject);
         }
         if (bn.hunger <= -10f)
         {
             LastMessage();
             Debug.Log("Animal died");
-            animalDied = true;
+            goneAnimalPanel.gameObject.SetActive(true);
             Destroy(gameObject);
         }
     }
@@ -108,6 +103,7 @@ public class AnimalMovement : MonoBehaviour
             why = "thirstiness";
         }
         string message = animal + " Died of "+ why +", he lived " + time;
+        Debug.Log(message);
         //OnAnimalDied?.Invoke();
         return message;
     }
@@ -271,8 +267,9 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToWaterCube(WorldMaterial c)
     {
+        Debug.Log("I found water and im going for it");
         Vector3 waterPosition = c.transform.position;    
-        if (gameObject.transform.localScale.y - c.transform.localScale.y <= .7f)
+        if (gameObject.transform.position.y - c.transform.localScale.y <= .7f)
         {
             float scale = c.transform.localScale.y;
             waterPosition = new Vector3(waterPosition.x, waterPosition.y + scale, waterPosition.z);

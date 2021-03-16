@@ -13,14 +13,10 @@ public class GoneAnimalPanel : MonoBehaviour
     }
     private void Update()
     {
-        if(animalMovement.animalDied==true)
-        {
-            ActivatePanel();
-        }
     }
     private void ActivatePanel()
     {
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
     }
     private void SetText(string msg)
     {

@@ -821,7 +821,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 50
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1680,6 +1680,8 @@ MonoBehaviour:
   foundVictim: 0
   fc: {fileID: 0}
   foundWater: []
+  goneAnimalPanel: {fileID: 1411841370355436275, guid: bfb141ec059d7364c830fca39049b104,
+    type: 3}
 --- !u!136 &4285948753444994794
 CapsuleCollider:
   m_ObjectHideFlags: 0
