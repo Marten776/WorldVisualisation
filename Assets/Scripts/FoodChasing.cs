@@ -5,7 +5,7 @@ using UnityEngine;
 public class FoodChasing : MonoBehaviour
 {
     BasicNeeds bn;
-    float lerpTime = 5f;
+    float lerpTime = 2f;
 
     GameObject goal;
 
@@ -16,15 +16,13 @@ public class FoodChasing : MonoBehaviour
         bn = GetComponent<BasicNeeds>();
         am = GetComponent<AnimalMovement>();
     }
-    // Update is called once per frame
     void Update()
     {
         if(am.foundVictim==false)
-        LookingForFood();
-
-        if(am.foundVictim==true)
-        {
             goal = LookingForFood();
+
+        if (am.foundVictim==true)
+        {
             ChaisingFood(goal);
         }
     }

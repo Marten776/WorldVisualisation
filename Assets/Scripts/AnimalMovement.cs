@@ -24,8 +24,12 @@ public class AnimalMovement : MonoBehaviour
     public FoodChasing fc;
     public List<Vector3> foundWater = new List<Vector3>();
     public GameObject goneAnimalPanel;
+    public Rigidbody rb;
+    public Collider collider;
     void Start()
     {
+        collider = GetComponent<Collider>();
+        rb = GetComponent<Rigidbody>();
         bn = GetComponent<BasicNeeds>();
         fc = GetComponent<FoodChasing>();
         TimeController.instance.StartTimer();
@@ -55,35 +59,20 @@ public class AnimalMovement : MonoBehaviour
 
             GoToPlantCube(actualCube);
         }
-        if (bn.thirstiness <= 50)
+        if (bn.thirstiness <= 50 || bn.hunger <= 50)
             isThirsty = true;
-        if (bn.hunger <= 50)
-            isHungry = true;
 
-        if (bn.thirstiness <= 0f)
+        if (bn.thirstiness <= 0f || bn.hunger <= 0f)
         {
             canWalk = false;
             isDying = true;
         }
-        if (bn.hunger <= 0f)
-        {
-            canWalk = false;
-            isDying = true;
-        }
-
-
-        if (bn.thirstiness <= -10f)
+        if (bn.thirstiness <= -10f || bn.hunger <= -10f)
         {
             LastMessage();  
             Debug.Log("Animal died");
-            goneAnimalPanel.gameObject.SetActive(true);
-            Destroy(gameObject);
-        }
-        if (bn.hunger <= -10f)
-        {
-            LastMessage();
-            Debug.Log("Animal died");
-            goneAnimalPanel.gameObject.SetActive(true);
+            rb.isKinematic = true;
+            collider.enabled = false;
             Destroy(gameObject);
         }
     }
@@ -251,6 +240,8 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToActualCube(WorldMaterial c)
     {
+        if (isDying)
+            return;
         Vector3 position = c.transform.position;
         if (gameObject.transform.position.y > position.y)
         {
@@ -267,6 +258,8 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToWaterCube(WorldMaterial c)
     {
+        if (isDying)
+            return;
         Debug.Log("I found water and im going for it");
         Vector3 waterPosition = c.transform.position;    
         if (gameObject.transform.position.y - c.transform.localScale.y <= .7f)
@@ -292,6 +285,8 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToPlantCube(WorldMaterial c)
     {
+        if (isDying)
+            return;
         Vector3 plantPosition = ScaleGoal(c.gameObject);
         transform.LookAt(plantPosition);
         transform.position = Vector3.Lerp(transform.position, plantPosition, lerpWaterTime * Time.deltaTime);

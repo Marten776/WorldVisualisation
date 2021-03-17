@@ -33,7 +33,9 @@ public class RunningAway : MonoBehaviour
             if(enemy.CompareTag("Danger"))
             {
                 am.foundVictim = true;
-                position = enemy.transform.position - transform.position;
+                
+                position = enemy.gameObject.transform.position - enemy.transform.forward*10;
+               //position = transform.position - enemy.transform.position;
                 transform.LookAt(position);
                 return position;
             }
@@ -43,7 +45,6 @@ public class RunningAway : MonoBehaviour
     }
     void RunAway(Vector3 escape)
     {
-        escape += escape;
         transform.position = Vector3.Lerp(transform.position, escape, lerpTime * Time.deltaTime);
     }
 }
