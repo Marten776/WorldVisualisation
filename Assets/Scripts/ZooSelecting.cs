@@ -20,4 +20,13 @@ public class ZooSelecting : MonoBehaviour
     {
         buildManager.SetAnimal(buildManager.wolfPrefab);
     }
+    public void WildBoarChoice()
+    {
+        buildManager.SetAnimal(buildManager.wildBoarPrefab);
+    }
+
+    public void WildChickenChoice()
+    {
+        buildManager.SetAnimal(buildManager.wildChickenPrefab);
+    }
 }

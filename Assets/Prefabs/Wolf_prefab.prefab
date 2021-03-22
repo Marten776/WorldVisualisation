@@ -1682,6 +1682,9 @@ MonoBehaviour:
   foundWater: []
   goneAnimalPanel: {fileID: 1411841370355436275, guid: bfb141ec059d7364c830fca39049b104,
     type: 3}
+  rb: {fileID: 0}
+  symulationSpeed: {fileID: 0}
+  collider: {fileID: 0}
 --- !u!136 &4285948753444994794
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1773,6 +1776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8677664e1fdf32e4f925671addb09eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  symulationSpeed: {fileID: 0}
 --- !u!114 &2785765043867565908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1789,6 +1793,7 @@ MonoBehaviour:
   hunger: 100
   maxThirstiness: 0
   maxHunger: 0
+  symulationSpeed: {fileID: 0}
   healthBar: {fileID: 4285948752420989769}
   hungerBar: {fileID: 4285948751658593825}
 --- !u!1 &4286548044072484063

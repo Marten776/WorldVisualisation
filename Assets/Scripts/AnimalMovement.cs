@@ -6,7 +6,7 @@ using System;
 
 public class AnimalMovement : MonoBehaviour
 {
-    float lerpTime = .5f;
+    float lerpTime =.5f;
     float lerpWaterTime = 1f;
     bool isThirsty = false;
     bool isHungry = false;
@@ -25,9 +25,11 @@ public class AnimalMovement : MonoBehaviour
     public List<Vector3> foundWater = new List<Vector3>();
     public GameObject goneAnimalPanel;
     public Rigidbody rb;
+    public SymulationSpeed symulationSpeed;
     public Collider collider;
     void Start()
     {
+        //symulationSpeed = GetComponent<SymulationSpeed>();
         collider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         bn = GetComponent<BasicNeeds>();
@@ -36,6 +38,9 @@ public class AnimalMovement : MonoBehaviour
     }
     void Update()
     {
+        //lerpTime = symulationSpeed.lerpWalking;
+        //lerpWaterTime = symulationSpeed.lerpWalkingToWater;
+
         if (canWalk)
             SearchCubes();
         GoToActualCube(actualCube);
@@ -76,7 +81,12 @@ public class AnimalMovement : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    public void FastSpeed()
+    {
+        Debug.Log("It's faster now!!");
+        lerpTime *= 2f;
+        lerpWaterTime *= 2f;
+    }
     public string LastMessage()
     {
         TimeController.instance.StopTimer();

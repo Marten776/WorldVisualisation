@@ -9,8 +9,10 @@ public class RunningAway : MonoBehaviour
 
     AnimalMovement am;
     // Start is called before the first frame update
+    public SymulationSpeed symulationSpeed;
     void Start()
     {
+        symulationSpeed = GetComponent<SymulationSpeed>();
         am = GetComponent<AnimalMovement>();
     }
 
@@ -34,8 +36,8 @@ public class RunningAway : MonoBehaviour
             {
                 am.foundVictim = true;
                 
-                position = enemy.gameObject.transform.position - enemy.transform.forward*10;
-               //position = transform.position - enemy.transform.position;
+                //position = enemy.gameObject.transform.position - enemy.transform.forward*10 + transform.position;
+               position = transform.position - enemy.transform.position;
                 transform.LookAt(position);
                 return position;
             }

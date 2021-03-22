@@ -5,14 +5,16 @@ using UnityEngine;
 public class FoodChasing : MonoBehaviour
 {
     BasicNeeds bn;
-    float lerpTime = 2f;
+    float lerpTime = 5f;
 
     GameObject goal;
 
     AnimalMovement am;
+    public SymulationSpeed symulationSpeed;
 
     void Start()
     {
+        symulationSpeed = GetComponent<SymulationSpeed>();
         bn = GetComponent<BasicNeeds>();
         am = GetComponent<AnimalMovement>();
     }
