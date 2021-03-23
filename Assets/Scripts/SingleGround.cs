@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class SingleGround : MonoBehaviour
 {
-    public Color hoverColor;
+    //public Color hoverColor;
 
     int counter = 0;
     GameObject worldMat;
@@ -14,8 +14,8 @@ public class SingleGround : MonoBehaviour
     private Color startColor;
     void Start()
     {
-        rend = GetComponent<Renderer>();
-        startColor = rend.material.color;
+        //rend = GetComponent<Renderer>();
+        //startColor = rend.material.color;
     }
 
     private void Update()
@@ -44,25 +44,25 @@ public class SingleGround : MonoBehaviour
             worldMat = Instantiate(worldMata, pos, transform.rotation);
 
     }
-    void OnMouseDown()
-    {
-        if (worldMat == null)
-        {
-            GameObject worldMata = BuildManager.instance.GetWorldMatToBuild();
-           Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-            worldMat = (GameObject)Instantiate(worldMata, pos, transform.rotation);
-       }
-    }
+    ///void OnMouseDown()
+    //{
+      //  if (worldMat == null)
+      //  {
+       //     GameObject worldMata = BuildManager.instance.GetWorldMatToBuild();
+       //    Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+      //      worldMat = (GameObject)Instantiate(worldMata, pos, transform.rotation);
+      // }
+   // }
    
     void OnMouseEnter()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-       rend.material.color = hoverColor;
+      // rend.material.color = hoverColor;
     }
 
     void OnMouseExit()
     {
-       rend.material.color = startColor;
+       //rend.material.color = startColor;
     }
 }
