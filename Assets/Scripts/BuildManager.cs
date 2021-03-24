@@ -43,7 +43,7 @@ public class BuildManager : MonoBehaviour
     {
         if(isCalled==true)
         {
-            //animals = null;
+            animals = null;
             // trees = null;
             // bushes = null;
         }

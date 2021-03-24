@@ -969,8 +969,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.35
-  m_Height: 0.81
+  m_Radius: 0.33
+  m_Height: 0.72
   m_Direction: 2
   m_Center: {x: -0.06, y: 0.31, z: 0}
 --- !u!23 &6079465136013045223
@@ -1057,8 +1057,6 @@ MonoBehaviour:
   symulationSpeed: {fileID: 0}
   healthBar: {fileID: 5988308824351065627}
   hungerBar: {fileID: 7386860994427951234}
-  waterNeed: 10
-  foodNeed: 15
 --- !u!114 &-4272286407925321218
 MonoBehaviour:
   m_ObjectHideFlags: 0

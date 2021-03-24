@@ -5,7 +5,7 @@ using UnityEngine;
 public class RunningAway : MonoBehaviour
 {
 
-    float lerpTime = 1f;
+    float lerpTime = 0.5f;
 
     AnimalMovement am;
     // Start is called before the first frame update

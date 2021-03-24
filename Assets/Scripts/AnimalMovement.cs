@@ -29,7 +29,6 @@ public class AnimalMovement : MonoBehaviour
     public Collider collider;
     void Start()
     {
-        //symulationSpeed = GetComponent<SymulationSpeed>();
         collider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         bn = GetComponent<BasicNeeds>();
@@ -38,9 +37,6 @@ public class AnimalMovement : MonoBehaviour
     }
     void Update()
     {
-        //lerpTime = symulationSpeed.lerpWalking;
-        //lerpWaterTime = symulationSpeed.lerpWalkingToWater;
-
         if (canWalk)
             SearchCubes();
         GoToActualCube(actualCube);
@@ -64,8 +60,14 @@ public class AnimalMovement : MonoBehaviour
 
             GoToPlantCube(actualCube);
         }
-        if (bn.thirstiness <= 50 || bn.hunger <= 50)
+        if (bn.thirstiness <= 50 )
+        {
             isThirsty = true;
+        }
+        if(bn.hunger <=50)
+        {
+            isHungry = true;
+        }
 
         if (bn.thirstiness <= 0f || bn.hunger <= 0f)
         {
@@ -179,7 +181,7 @@ public class AnimalMovement : MonoBehaviour
         WorldMaterial closestElement = FindClosestElement(foundCubes);
         if (SearchSpecificCube(closestElement.isWater, closestElement))
         {
-            closestElement.isAnimalOn = true;
+            //closestElement.isAnimalOn = true;
             return true;
         }
         return false;
@@ -270,9 +272,8 @@ public class AnimalMovement : MonoBehaviour
     {
         if (isDying)
             return;
-        Debug.Log("I found water and im going for it");
         Vector3 waterPosition = c.transform.position;    
-        if (gameObject.transform.position.y - c.transform.localScale.y <= .7f)
+        if (gameObject.transform.position.y - c.transform.localScale.y <= 1f)
         {
             float scale = c.transform.localScale.y;
             waterPosition = new Vector3(waterPosition.x, waterPosition.y + scale, waterPosition.z);
@@ -285,7 +286,6 @@ public class AnimalMovement : MonoBehaviour
         {
             
             bn.thirstiness = 100;
-            Debug.Log(gameObject.name + " Just drank something");
             c.isAnimalOn = false;
             bn.healthBar.Health(bn.thirstiness);
             reachedActualCube = true;
@@ -295,7 +295,7 @@ public class AnimalMovement : MonoBehaviour
     }
     private void GoToPlantCube(WorldMaterial c)
     {
-        if (isDying)
+        if (isDying==true)
             return;
         Vector3 plantPosition = ScaleGoal(c.gameObject);
         transform.LookAt(plantPosition);
@@ -304,8 +304,9 @@ public class AnimalMovement : MonoBehaviour
         {
             isEating = true;
             canWalk = false;
-            Eating();
             c.isAnimalOn = false;
+            Eating();
+           
         }
     }
     void Eating()

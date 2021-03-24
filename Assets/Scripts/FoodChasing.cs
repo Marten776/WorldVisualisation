@@ -5,7 +5,7 @@ using UnityEngine;
 public class FoodChasing : MonoBehaviour
 {
     BasicNeeds bn;
-    float lerpTime = 5f;
+    float lerpTime = 6f;
 
     GameObject goal;
 
@@ -48,9 +48,12 @@ public class FoodChasing : MonoBehaviour
     }
     public void ChaisingFood(GameObject food)
     {
+        if (food == null)
+            am.foundVictim = false;
         transform.position = Vector3.Lerp(transform.position, food.transform.position, lerpTime * Time.deltaTime);
+        transform.LookAt(food.transform.position);
         float distance = Vector3.Distance(transform.position, food.transform.position);
-        if (distance <= 2f)
+        if (distance <= 3f)
         {
             bn.hunger = 100;
             Destroy(food.gameObject);
